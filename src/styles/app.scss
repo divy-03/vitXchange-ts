@@ -1,0 +1,76 @@
+@import "mixin";
+$violet: #ede8f5;
+$lightGrey: #adbbda;
+$Grey: #8697c4;
+$lightBlue: #7091e6;
+$darkBlue: #3d52a0;
+$darkest: #26293a;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+
+.adminContainer {
+  @include grid(1fr 4fr, 2rem);
+  height: 100vh;
+  background-color: $violet;
+
+  > aside {
+    width: 90%;
+    height: calc(100vh - 10px);
+    margin: 5px auto;
+    background-color: white;
+    z-index: 10;
+    overflow-y: auto;
+    padding: 1rem;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > div {
+      margin: 2rem 1rem;
+
+      > h5 {
+        @include heading(2px);
+        opacity: 0.8;
+        margin: 1rem 0;
+        cursor: pointer;
+      }
+
+      > ul {
+        @include flex(column, center, center, 0.5rem);
+        transition: 0.6s;
+        > li {
+          padding: 0.5rem 1rem;
+          border-radius: 10px;
+
+          > a {
+            color: $darkest;
+          }
+        }
+      }
+    }
+  }
+}
+
+.full {
+  opacity: 1;
+  transform: translate(0, 0);
+  position: relative;
+}
+
+.closed {
+  opacity: 0;
+  transform: translateX(100px);
+  position: absolute;
+}
