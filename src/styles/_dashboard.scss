@@ -7,6 +7,7 @@
     height: 4rem;
     @include flex(row, unset);
     padding: 0 1rem;
+    margin: 0 0.5rem 0 2rem;
     border-bottom: 1px solid $darkBlue;
 
     > input {
@@ -69,6 +70,71 @@
         }
         span {
           position: relative;
+        }
+      }
+    }
+  }
+  .graphContainer {
+    @include flex(row, center, center, 2rem);
+    padding: 0 2rem 2rem 2rem;
+    > div {
+      background-color: white;
+      border-radius: 10px;
+    }
+
+    .revenueChart {
+      width: 100%;
+      padding: 1rem 3rem;
+
+      > h2 {
+        @include heading;
+        margin: 1rem 0 2rem;
+        text-align: center;
+      }
+    }
+
+    .dashboardCategories {
+      width: 100%;
+      max-width: 16rem;
+      @include flex(column, center, unset, 0);
+      padding-bottom: 2rem;
+
+      > h2 {
+        @include heading;
+        margin: 1rem 0 2rem;
+        text-align: center;
+      }
+
+      > div {
+        overflow-y: auto;
+        padding-left: 0.5rem;
+      }
+    }
+
+    .categoryItem {
+      width: 100%;
+      @include flex(column, start, space-between, 0);
+      padding: 1rem;
+
+      > h5 {
+        letter-spacing: 1px;
+        font-weight: 300;
+      }
+      > div {
+        @include flex(row, space-between);
+
+        > div {
+          margin-left: auto;
+          width: 60%;
+          background-color: $Grey;
+          height: 0.5rem;
+          border-radius: 20px;
+          flex: none;
+
+          >div {
+            border-radius: 20px;
+            height: 100%;
+          }
         }
       }
     }

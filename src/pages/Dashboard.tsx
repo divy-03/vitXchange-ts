@@ -21,7 +21,7 @@ const Dashboard = () => {
             amount={true}
             value={340000}
             heading="Revenue"
-            color="rgb(0,115,255)"
+            color="#7091e6"
           />
           <WidgetItem
             percent={-14}
@@ -41,6 +41,72 @@ const Dashboard = () => {
             heading="Products"
             color="rgb(76 0 255)"
           />
+        </section>
+
+        <section className="graphContainer">
+          <div className="revenueChart">
+            <h2>Revenue & Transaction</h2>
+            {/* Graph Here..... */}
+          </div>
+          <div className="dashboardCategories">
+            <h2>Inventory</h2>
+            <div>
+              <Categoryitem
+                heading="Laptops"
+                stock={70}
+                total={120}
+                color="cyan"
+              />
+              <Categoryitem
+                heading="Mobile"
+                stock={800}
+                total={1400}
+                color="violet"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+              <Categoryitem
+                heading="Shoes"
+                stock={20}
+                total={120}
+                color="red"
+              />
+            </div>
+          </div>
         </section>
       </main>
     </div>
@@ -89,6 +155,26 @@ const WidgetItem = (w: WidgetItemProps) => (
       </span>
     </div>
   </article>
+);
+
+interface CatItemProps {
+  color: string;
+  stock: number;
+  total: number;
+  heading: string;
+}
+
+const Categoryitem = ({ color, stock, total, heading }: CatItemProps) => (
+  <div className="categoryItem">
+    <h5>{heading}</h5>
+    <div>
+      <span>{stock}</span>
+      <div>
+        <div style={{ backgroundColor: color, width: `${stock/total * 100}%` }}></div>
+      </div>
+      <span>{total}</span>
+    </div>
+  </div>
 );
 
 export default Dashboard;
