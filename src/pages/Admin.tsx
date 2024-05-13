@@ -10,16 +10,23 @@ const Transaction = lazy(() => import("./Transaction"));
 
 const Admin = () => {
   return (
-      <Suspense fallback={<Loader/>}>
-        <AdminSidebar />
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/product" element={<Products />} />
-          <Route path="/customer" element={<Customers />} />
-          <Route path="/transaction" element={<Transaction />} />
-        </Routes>
-      </Suspense>
+    <Suspense fallback={<Loader />}>
+      <AdminSidebar />
+      <Routes>
+        <Route path="/" element={<Oops />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/product" element={<Products />} />
+        <Route path="/customer" element={<Customers />} />
+        <Route path="/transaction" element={<Transaction />} />
+      </Routes>
+    </Suspense>
   );
 };
+
+const Oops = () => (
+  <div className="adminContainer">
+    Select a menu from sidebar to access it!!
+  </div>
+);
 
 export default Admin;

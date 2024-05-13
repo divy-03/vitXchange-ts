@@ -1,17 +1,15 @@
 @import "mixin";
-$violet: #ede8f5;
-$lightGrey: #adbbda;
-$Grey: #8697c4;
-$lightBlue: #7091e6;
-$darkBlue: #3d52a0;
-$darkest: #26293a;
+@import "dashboard";
+@import "variables";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  body {background-color: $violet;}
+  body {
+    background-color: $violet;
+  }
 }
 
 * {
@@ -22,13 +20,25 @@ $darkest: #26293a;
   text-decoration: none;
 }
 
+.red {
+  color: red;
+}
+
+.purple {
+  color: rgb(50, 0, 255);
+}
+
+.green {
+  color: rgb(0, 195, 0);
+}
+
 .adminContainer {
   // @include grid(1fr 4fr, 2rem);
   min-height: 100vh;
   width: 80%;
-  margin-left: auto; 
-  overflow-y: auto; 
-  background-color: $Grey;
+  margin-left: auto;
+  overflow-y: auto;
+  background-color: $violet;
 }
 
 aside {

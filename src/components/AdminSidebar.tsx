@@ -4,7 +4,7 @@ import { RiCoupon3Fill, RiDashboardFill, RiShoppingBag3Fill } from "react-icons/
 import { IoIosPeople } from "react-icons/io";
 import { AiFillFileText } from "react-icons/ai";
 import { useState } from "react";
-import { FaBitcoin, FaChartBar, FaChartLine, FaChartPie, FaGamepad, FaStopwatch } from "react-icons/fa";
+import { FaBitcoin, FaChartBar, FaChartLine, FaChartPie, FaStopwatch } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const location = useLocation();
