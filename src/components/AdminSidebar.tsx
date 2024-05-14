@@ -1,16 +1,40 @@
 import { IconType } from "react-icons";
 import { Link, Location, useLocation } from "react-router-dom";
-import { RiCoupon3Fill, RiDashboardFill, RiShoppingBag3Fill } from "react-icons/ri";
+import {
+  RiCoupon3Fill,
+  RiDashboardFill,
+  RiShoppingBag3Fill,
+} from "react-icons/ri";
 import { IoIosPeople } from "react-icons/io";
 import { AiFillFileText } from "react-icons/ai";
 import { useState } from "react";
-import { FaBitcoin, FaChartBar, FaChartLine, FaChartPie, FaStopwatch } from "react-icons/fa";
+import {
+  FaBitcoin,
+  FaChartBar,
+  FaChartLine,
+  FaChartPie,
+  FaStopwatch,
+} from "react-icons/fa";
 
 const AdminSidebar = () => {
   const location = useLocation();
   return (
     <aside>
-      <h2>Logo</h2>
+      <div>
+        <Link to="/" className="logo">
+          <span className="V">V</span>
+          <span className="X">X</span>
+        </Link>
+        <Link to="/" className="logoTxt">
+          VIT
+        </Link>
+        <Link to="/" className="X">
+          X
+        </Link>
+        <Link to="/" className="logoTxt">
+          change
+        </Link>
+      </div>
       <Dash location={location} />
       <Charts location={location} />
       <Apps location={location} />
@@ -72,18 +96,8 @@ const Charts = ({ location }: { location: Location }) => {
     <div>
       <button onClick={handleClick}>Charts</button>
       <ul className={`${click ? "full" : "closed"}`}>
-        <Li
-          url="/admin/bar"
-          Icon={FaChartBar}
-          text="Bar"
-          location={location}
-        />
-        <Li
-          url="/admin/pie"
-          Icon={FaChartPie}
-          text="Pie"
-          location={location}
-        />
+        <Li url="/admin/bar" Icon={FaChartBar} text="Bar" location={location} />
+        <Li url="/admin/pie" Icon={FaChartPie} text="Pie" location={location} />
         <Li
           url="/admin/line"
           Icon={FaChartLine}
@@ -130,7 +144,9 @@ const Apps = ({ location }: { location: Location }) => {
 const Li = ({ url, location, Icon, text }: LiProps) => (
   <li
     style={{
-      backgroundColor: location.pathname.includes(url) ? "#ede8f5" : "transparent",
+      backgroundColor: location.pathname.includes(url)
+        ? "#ede8f5"
+        : "transparent",
     }}
   >
     <Link

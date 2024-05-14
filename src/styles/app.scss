@@ -52,15 +52,59 @@ aside {
     display: none;
   }
 
-  > h2 {
+  > div:first-child {
+    @include flex(row, start, center, 0rem);
     background-color: white;
-    width: auto;
-    padding: .25rem 2rem;
-    border-radius: 20px;
+    // width: auto;
+    padding: 0.25rem 0rem;
+    border-radius: 50px;
+
+    .logo {
+      height: 40px;
+      width: 40px;
+      background-color: black;
+      outline: 2px solid red;
+      border-top: 2px solid white;
+      border-bottom: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0px 0px 12px white;
+      display: flex;
+      margin: 0 0.3rem 0 0.3rem;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.4s;
+    }
+
+    .logo:hover {
+      cursor: pointer;
+      box-shadow: 0px 0px 22px white;
+    }
+
+    .logoTxt {
+      font-family: monospace;
+      font-size: 22px;
+      color: black;
+    }
+
+    .V {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      // color: red;
+      color: white;
+      font-size: 22px;
+      font-style: italic;
+      padding-bottom: 2px;
+    }
+
+    .X {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: red;
+      font-size: 26px;
+      font-style: italic;
+    }
   }
 
   > div {
-    margin: 1rem auto;
+    // margin: 1rem auto;
 
     > button {
       @include heading(2px);

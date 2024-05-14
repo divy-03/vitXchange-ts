@@ -48,6 +48,7 @@ const Dashboard = () => {
           <div className="revenueChart">
             <h2>Revenue & Transaction</h2>
             {/* Graph Here..... */}
+            <div>Graph Here</div>
           </div>
           <div className="dashboardCategories">
             <h2>Inventory</h2>
