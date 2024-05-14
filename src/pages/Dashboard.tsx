@@ -1,6 +1,7 @@
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
+import data from "../assets/data.json";
 
 const Dashboard = () => {
   return (
@@ -51,60 +52,15 @@ const Dashboard = () => {
           <div className="dashboardCategories">
             <h2>Inventory</h2>
             <div>
-              <Categoryitem
-                heading="Laptops"
-                stock={70}
-                total={120}
-                color="cyan"
-              />
-              <Categoryitem
-                heading="Mobile"
-                stock={800}
-                total={1400}
-                color="violet"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
-              <Categoryitem
-                heading="Shoes"
-                stock={20}
-                total={120}
-                color="red"
-              />
+              {data.categories.map((i) => (
+                <Categoryitem
+                  key={i.heading}
+                  heading={i.heading}
+                  stock={i.stock}
+                  total={i.total}
+                  color={`hsl(${i.stock/i.total * 400}, 100%, 50%)`}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -170,7 +126,9 @@ const Categoryitem = ({ color, stock, total, heading }: CatItemProps) => (
     <div>
       <span>{stock}</span>
       <div>
-        <div style={{ backgroundColor: color, width: `${stock/total * 100}%` }}></div>
+        <div
+          style={{ backgroundColor: color, width: `${(stock / total) * 100}%` }}
+        ></div>
       </div>
       <span>{total}</span>
     </div>
