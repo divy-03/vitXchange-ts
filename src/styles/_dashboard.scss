@@ -159,8 +159,8 @@
   .transaction-container {
     display: flex;
     gap: 2rem;
-    padding: 0 2rem 0rem 2rem;
-    // height: 30rem;
+    padding: 0 2rem 2rem 2rem;
+    height: 30rem;
 
     > div {
       background-color: white;
@@ -184,7 +184,7 @@
       }
     }
 
-    .transaction-box {
+    .transactionBox {
       width: 100%;
       padding: 1rem;
       overflow-x: auto;

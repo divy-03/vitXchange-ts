@@ -5,6 +5,7 @@ import data from "../assets/data.json";
 import { BarChart, DoughnutChart } from "../components/Charts";
 import { Link } from "react-router-dom";
 import { BiMaleFemale } from "react-icons/bi";
+import Table from "../components/DashboardTable";
 
 const Dashboard = () => {
   return (
@@ -94,7 +95,7 @@ const Dashboard = () => {
             </p>
           </div>
 
-          {/* <Table data={data.transaction} /> */}
+          <Table data={data.transaction} />
         </section>
       </main>
     </div>
