@@ -5,7 +5,7 @@ import {
   RiDashboardFill,
   RiShoppingBag3Fill,
 } from "react-icons/ri";
-import { IoIosPeople } from "react-icons/io";
+import { IoIosArrowForward, IoIosPeople } from "react-icons/io";
 import { AiFillFileText } from "react-icons/ai";
 import { useState } from "react";
 import {
@@ -51,12 +51,22 @@ interface LiProps {
 
 const Dash = ({ location }: { location: Location }) => {
   const [click, setClick] = useState(false);
+  const [isRotated, setIsRotated] = useState(false);
   const handleClick = () => {
+    setIsRotated(!isRotated);
     setClick(!click);
   };
   return (
     <div>
-      <button onClick={handleClick}>Dashboard</button>
+      <button onClick={handleClick}>
+        Dashboard{" "}
+        <IoIosArrowForward
+          style={{
+            transition: "0.5s",
+            transform: isRotated ? "rotate(90deg)" : "none",
+          }}
+        />
+      </button>
       <ul className={`${click ? "full" : "closed"}`}>
         <Li
           url="/admin/dashboard"
@@ -89,12 +99,19 @@ const Dash = ({ location }: { location: Location }) => {
 
 const Charts = ({ location }: { location: Location }) => {
   const [click, setClick] = useState(false);
+  const [isRotated, setIsRotated] = useState(false);
   const handleClick = () => {
+    setIsRotated(!isRotated);
     setClick(!click);
   };
   return (
     <div>
-      <button onClick={handleClick}>Charts</button>
+      <button onClick={handleClick}>Charts<IoIosArrowForward
+          style={{
+            transition: "0.5s",
+            transform: isRotated ? "rotate(90deg)" : "none",
+          }}
+        /></button>
       <ul className={`${click ? "full" : "closed"}`}>
         <Li url="/admin/bar" Icon={FaChartBar} text="Bar" location={location} />
         <Li url="/admin/pie" Icon={FaChartPie} text="Pie" location={location} />
@@ -111,12 +128,19 @@ const Charts = ({ location }: { location: Location }) => {
 
 const Apps = ({ location }: { location: Location }) => {
   const [click, setClick] = useState(false);
+  const [isRotated, setIsRotated] = useState(false);
   const handleClick = () => {
+    setIsRotated(!isRotated);
     setClick(!click);
   };
   return (
     <div>
-      <button onClick={handleClick}>Apps</button>
+      <button onClick={handleClick}>Apps<IoIosArrowForward
+          style={{
+            transition: "0.5s",
+            transform: isRotated ? "rotate(90deg)" : "none",
+          }}
+        /></button>
       <ul className={`${click ? "full" : "closed"}`}>
         <Li
           url="/admin/stopwatch"

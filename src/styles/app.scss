@@ -108,6 +108,7 @@ aside {
 
     > button {
       @include heading(2px);
+      @include flex();
       opacity: 0.8;
       padding: 5px;
       margin: 1rem 0;

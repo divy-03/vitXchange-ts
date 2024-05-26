@@ -87,11 +87,20 @@
     .revenueChart {
       width: 100%;
       padding: 1rem 3rem;
+      @include flex(column);
 
       > h2 {
         @include heading;
         margin: 1rem 0 2rem;
         text-align: center;
+      }
+
+      > div {
+        @include flex();
+        height: 400px;
+        width: 100%;
+        font-size: 5rem;
+        border: 2px solid;
       }
     }
 
@@ -104,6 +113,12 @@
       > h2 {
         @include heading;
         margin: 1rem 0 2rem;
+        text-align: center;
+      }
+
+      > a {
+        font-size: 0.7rem;
+        @include heading;
         text-align: center;
       }
 
@@ -128,16 +143,54 @@
         > div {
           margin-left: auto;
           width: 60%;
-          background-color: $violet ;
+          background-color: $violet;
           height: 0.5rem;
           border-radius: 20px;
           flex: none;
 
-          >div {
+          > div {
             border-radius: 20px;
             height: 100%;
           }
         }
+      }
+    }
+  }
+  .transaction-container {
+    display: flex;
+    gap: 2rem;
+    padding: 0 2rem 0rem 2rem;
+    // height: 30rem;
+
+    > div {
+      background-color: white;
+      box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.132);
+      border-radius: 10px;
+    }
+    .gender-chart {
+      width: 100%;
+      max-width: 20rem;
+      padding: 1rem;
+      position: relative;
+      > h2 {
+        text-align: center;
+        margin: 1.5rem 0 2rem 0;
+        @include heading;
+      }
+      > p {
+        @include posCenter;
+        font-size: 2rem;
+        color: rgba(0, 0, 0, 0.634);
+      }
+    }
+
+    .transaction-box {
+      width: 100%;
+      padding: 1rem;
+      overflow-x: auto;
+      > h2 {
+        margin: 1.5rem 0 0 0;
+        @include heading;
       }
     }
   }

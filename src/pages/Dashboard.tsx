@@ -2,6 +2,9 @@ import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 import data from "../assets/data.json";
+import { BarChart, DoughnutChart } from "../components/Charts";
+import { Link } from "react-router-dom";
+import { BiMaleFemale } from "react-icons/bi";
 
 const Dashboard = () => {
   return (
@@ -48,7 +51,15 @@ const Dashboard = () => {
           <div className="revenueChart">
             <h2>Revenue & Transaction</h2>
             {/* Graph Here..... */}
-            <div>Graph Here</div>
+            {/* <div>Graph Here</div> */}
+            <BarChart
+              data_2={[300, 144, 433, 655, 237, 755, 190]}
+              data_1={[200, 444, 343, 556, 778, 455, 990]}
+              title_1="Revenue"
+              title_2="Transaction"
+              bgColor_1="rgb(0,115,255)"
+              bgColor_2="rgba(53,162,235,0.8)"
+            />
           </div>
           <div className="dashboardCategories">
             <h2>Inventory</h2>
@@ -59,11 +70,31 @@ const Dashboard = () => {
                   heading={i.heading}
                   stock={i.stock}
                   total={i.total}
-                  color={`hsl(${i.stock/i.total * 400}, 100%, 50%)`}
+                  color={`hsl(${(i.stock / i.total) * 400}, 100%, 50%)`}
                 />
               ))}
             </div>
+            <Link to="../products">View more products</Link>
           </div>
+        </section>
+
+        <section className="transaction-container">
+          <div className="gender-chart">
+            <h2>Gender Ratio</h2>
+
+            <DoughnutChart
+              labels={["Female", "Male"]}
+              data={[12, 19]}
+              backgroundColor={["hsl(340,82%,56%)", "rgba(53,162,235,0.8)"]}
+              cutout={90}
+            />
+
+            <p>
+              <BiMaleFemale />
+            </p>
+          </div>
+
+          {/* <Table data={data.transaction} /> */}
         </section>
       </main>
     </div>
