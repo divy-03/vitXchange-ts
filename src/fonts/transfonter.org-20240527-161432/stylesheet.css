@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Black Sansa Pro';
+    src: url('BlackSansaPro-Thin.woff2') format('woff2'),
+        url('BlackSansaPro-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+

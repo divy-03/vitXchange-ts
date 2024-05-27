@@ -2,6 +2,7 @@
   letter-spacing: $spacing;
   font-weight: $weight;
   text-transform: $case;
+  // font-family: "Aster";
 }
 
 @mixin flex($dir: row, $justify: center, $align: center, $gap: 1rem) {

@@ -4,3 +4,23 @@ $Grey: #8697c4;
 $lightBlue: #7091e6;
 $darkBlue: #3d52a0;
 $darkest: #26293a;
+
+@font-face {
+  font-family: "Black Sansa Pro";
+  src: url("../fonts/transfonter.org-20240527-161432/BlackSansaPro-Thin.woff2")
+      format("woff2"),
+    url("../fonts/transfonter.org-20240527-161432/BlackSansaPro-Thin.woff")
+      format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aster";
+  src: url("../fonts/transfonter.org-20240527-165943/AsterRegular.woff2") format("woff2"),
+    url("../fonts/transfonter.org-20240527-165943/AsterRegular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
