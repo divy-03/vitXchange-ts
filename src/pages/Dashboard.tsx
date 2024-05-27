@@ -75,7 +75,7 @@ const Dashboard = () => {
                 />
               ))}
             </div>
-            <Link to="../products">View more products</Link>
+            <Link to="../product">View more products</Link>
           </div>
         </section>
 
