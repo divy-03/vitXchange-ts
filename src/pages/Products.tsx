@@ -2,6 +2,7 @@ import { ReactElement, useCallback, useState } from "react";
 import TableHOC from "../components/TableHOC";
 import { Column } from "react-table";
 import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 interface DataType {
   photo: ReactElement;
@@ -104,6 +105,9 @@ const Products = () => {
   return (
     <div className="adminContainer">
       <Table />
+      <Link to={"/new"} className="createProductBtn">
+        <FaPlus />
+      </Link>
     </div>
   );
 };

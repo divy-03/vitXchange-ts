@@ -1,6 +1,8 @@
 @import "mixin";
 @import "dashboard";
 @import "variables";
+@import "products";
+@import "loader";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -148,6 +150,10 @@ aside {
   // display: none;
 }
 
+.heading {
+  @include heading;
+}
+
 .table {
   border-collapse: collapse;
   width: 100%;
@@ -210,11 +216,4 @@ aside {
       }
     }
   }
-}
-
-.dashboardProducts {
-  background-color: white;
-  padding: 1rem;
-  margin: 2rem;
-  border-radius: 10px;
 }

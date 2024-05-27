@@ -85,7 +85,7 @@ const Dashboard = () => {
 
             <DoughnutChart
               labels={["Female", "Male"]}
-              data={[12, 19]}
+              data={[12, 20]}
               backgroundColor={["hsl(340,82%,56%)", "rgba(53,162,235,0.8)"]}
               cutout={90}
             />
