@@ -6,12 +6,12 @@ $darkBlue: #3d52a0;
 $darkest: #26293a;
 
 @font-face {
-  font-family: "Black Sansa Pro";
+  font-family: "Sansa";
   src: url("../fonts/transfonter.org-20240527-161432/BlackSansaPro-Thin.woff2")
       format("woff2"),
     url("../fonts/transfonter.org-20240527-161432/BlackSansaPro-Thin.woff")
       format("woff");
-  font-weight: 100;
+  // font-weight: 100;
   font-style: normal;
   font-display: swap;
 }

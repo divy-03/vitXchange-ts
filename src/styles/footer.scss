@@ -1,0 +1,109 @@
+.footContainer {
+  background-color: $darkest;
+  padding: 2rem 0;
+  @include flex(row, space-around, center);
+  transition: all 0.3s;
+
+  .footLeft {
+    // width: 20%;
+    > div {
+        margin: auto;
+        // width: 120px;
+        text-align: center;
+    }
+    > .vitLogo {
+      height: 200px;
+      width: 200px;
+      background-color: rgb(40, 40, 40, 1);
+      border-radius: 100%;
+      font-size: 4rem;
+      text-align: center;
+      @include flex();
+      z-index: 2;
+      margin: auto;
+
+      .Vbig {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        font-size: 6rem;
+        font-style: italic;
+        padding-bottom: 2px;
+      }
+
+      .Xbig {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: red;
+        font-size: 7rem;
+        font-style: italic;
+      }
+    }
+    .logoTxt {
+      font-family: monospace;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    .V {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      /* color: red; */
+      font-size: 1.3rem;
+      font-style: italic;
+      padding-bottom: 2px;
+    }
+
+    .X {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: red;
+      font-size: 1.6rem;
+      font-style: italic;
+    }
+  }
+
+  .footCenter {
+    // width: 50%;
+    @include flex(row, space-between, start, 3vw);
+
+    > div {
+    //   width: 33%;
+
+      > h1 {
+        color: rgb(255, 84, 84);
+        font-size: 1.2rem;
+        text-align: center;
+      }
+      > ul > li {
+        text-align: center;
+        padding: 5px;
+
+        > a {
+          color: $lightGrey;
+          font-size: 1rem;
+          transition: all 0.2s;
+          &:hover {
+            color: white;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .footRight {
+    // width: 30%;
+
+    > h1 {
+      font-size: 1.1rem;
+      color: rgb(255, 84, 84);
+    }
+    > ul > li > a {
+      padding: 10px 5px;
+      font-size: 1.1rem;
+      color: $lightGrey;
+      transition: all 0.2s;
+      &:hover {
+        color: white;
+        text-decoration: underline;
+      }
+    }
+  }
+}
