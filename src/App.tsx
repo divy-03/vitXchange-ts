@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loader from "./components/Loader";
 
-const Admin = lazy(() => import("./pages/Admin"));
+const Admin = lazy(() => import("./adminPages/Admin"));
 
 const App = () => {
   return (
