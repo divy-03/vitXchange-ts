@@ -17,9 +17,27 @@
   z-index: 12;
   width: 100vw;
   background-color: white;
-//   background: linear-gradient($darkest, $lightBlue);
-//   color: white;
-  transition: 0.5s ease;
+  // background: linear-gradient($darkest, $lightBlue);
+  //   color: white;
+  transition: all 0.5s ease;
+}
+
+.dropUser {
+  @include flex(column);
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  position: fixed;
+  width: auto;
+  top: 5rem;
+  right: -1rem;
+  z-index: 13;
+  background-color: white;
+  border-radius: 0 0 0 1rem;
+  // background: linear-gradient($darkest, $lightBlue);
+  transition: all 0.5s ease;
 }
 
 .container:hover .dropContainer {
@@ -27,6 +45,12 @@
   visibility: visible;
   height: 20rem; // fix this later
   //   padding: 10px;
+}
+
+.container:hover .dropUser {
+  opacity: 1;
+  visibility: visible;
+  height: 10rem;
 }
 
 .dropList {
@@ -46,7 +70,7 @@
     width: 0;
     height: 1px;
     background-color: black;
-    transition: 0.3s;
+    transition: all 0.3s;
   }
 
   &:hover::after {
@@ -67,7 +91,7 @@
     height: 1px;
     background-color: black;
     transform: translateX(-50%);
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
   }
   &:hover::after {
     width: 100%;
@@ -89,47 +113,47 @@
     margin: 2rem;
     height: inherit;
     .logo {
-        height: 40px;
-        width: 40px;
-        background-color: black;
-        outline: 2px solid red;
-        border-top: 2px solid white;
-        border-bottom: 2px solid white;
-        border-radius: 50%;
-        box-shadow: 0px 0px 12px white;
-        display: flex;
-        margin: 0 0.3rem 0 0.3rem;
-        justify-content: center;
-        align-items: center;
-        transition: all 0.4s;
-      }
-  
-      .logo:hover {
-        cursor: pointer;
-        box-shadow: 0px 0px 22px white;
-      }
-  
-      .logoTxt {
-        font-family: monospace;
-        font-size: 22px;
-        color: black;
-      }
-  
-      .V {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        // color: red;
-        color: white;
-        font-size: 22px;
-        font-style: italic;
-        padding-bottom: 2px;
-      }
-  
-      .X {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        color: red;
-        font-size: 26px;
-        font-style: italic;
-      }
+      height: 40px;
+      width: 40px;
+      background-color: black;
+      outline: 2px solid red;
+      border-top: 2px solid white;
+      border-bottom: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0px 0px 12px white;
+      display: flex;
+      margin: 0 0.3rem 0 0.3rem;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.4s;
+    }
+
+    .logo:hover {
+      cursor: pointer;
+      box-shadow: 0px 0px 22px white;
+    }
+
+    .logoTxt {
+      font-family: monospace;
+      font-size: 22px;
+      color: black;
+    }
+
+    .V {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      // color: red;
+      color: white;
+      font-size: 22px;
+      font-style: italic;
+      padding-bottom: 2px;
+    }
+
+    .X {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: red;
+      font-size: 26px;
+      font-style: italic;
+    }
   }
 
   .navCenter {
@@ -155,7 +179,7 @@
           height: 1px;
           background-color: black;
           transform: translateX(-50%);
-          transition: 0.3s ease;
+          transition: all 0.3s ease;
         }
         &:hover::after {
           width: 100%;
@@ -166,7 +190,6 @@
 
   .navRight {
     @include flex();
-    padding: 1.5rem;
     // background-color: beige;
     height: inherit;
 
@@ -174,12 +197,62 @@
       color: black;
     }
 
-    > button {
-      @include square(3rem);
-      border-radius: 50%;
-      border: none;
-      background-color: $lightGrey;
-      color: $darkBlue;
+    > div {
+      margin: 1.4rem;
+      > div {
+        > a {
+          color: black;
+        }
+        > button {
+          padding: 1rem;
+          border-radius: 1rem;
+          // width: 8rem;
+          border: none;
+          background-color: $darkest;
+          color: white;
+          @include flex(row, center, center, 0);
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: $darkBlue;
+            padding-right: 1rem;
+            width: auto;
+          }
+
+          &:hover .signOutIcon {
+            // transform: translateX(0rem);
+            width: 0;
+          }
+          &:hover .signOutTxt {
+            opacity: 1;
+            width: 100%;
+            transform: translateX(0);
+            // margin-left: 1rem;
+          }
+          > svg {
+            transition: all 0.3s ease;
+          }
+          > span {
+            width: 0;
+            opacity: 0;
+            white-space: nowrap;
+            margin-left: 0;
+            transform: translateX(-1rem);
+            transition: all 0.3s ease;
+          }
+        }
+        
+      }
+      > button {
+        @include square(3rem);
+        border-radius: 50%;
+        border: none;
+        background-color: $lightGrey;
+        color: $darkBlue;
+      }
     }
   }
 }

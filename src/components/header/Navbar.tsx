@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   FaShoppingBag,
   FaSignInAlt,
@@ -7,10 +6,9 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const user = { _id: "asd", role: "admin" };
+const user = { _id: "asdf", role: "admin" };
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <nav className="navbar">
       <div className="navLeft">
@@ -30,7 +28,7 @@ const Navbar = () => {
       </div>
       <div className="navCenter">
         <div className="container">
-          <Link to={"./category/food"} onClick={() => setIsOpen(false)}>Food</Link>
+          <Link to={"./category/food"}>Food</Link>
           <div className="dropContainer">
             <div className="dropList">
               <ul>
@@ -55,135 +53,79 @@ const Navbar = () => {
           </div>
         </div>
         <div className="container">
-          <Link to={"./category/tech"} onClick={() => setIsOpen(false)}>Tech</Link>
+          <Link to={"./category/tech"}>Tech</Link>
           <div className="dropContainer">
             <div className="dropList">
               <ul>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Food</b> - dekho ye dil ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Pani</b> - dekho ye dil kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Falana</b> - dekho ye dil ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Dhimka</b> - dekho ye dil{" "}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>HOME</b> - dekho ye dil ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>HOME</b> - dekho ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>HOME</b> - dekho ye dil haal kya
                   </Link>
                 </li>
               </ul>
               <ul>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>HOME</b> - dekho ye dil ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Food</b> - dekho ye dil ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Pani</b> - dekho ye dil kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>HOME</b> - dekho ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Dhimka</b> - dekho ye dil{" "}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>Falana</b> - dekho ye dil ka haal kya
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={"#"}
-                    className="udlLeft"
-                    onClick={() => setIsOpen(false)}
-                  >
+                  <Link to={"#"} className="udlLeft">
                     <b>HOME</b> - dekho ye dil haal kya
                   </Link>
                 </li>
@@ -192,9 +134,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="container">
-          <Link to={"./category/shoes"} onClick={() => setIsOpen(false)}>
-            Shoes
-          </Link>
+          <Link to={"./category/shoes"}>Shoes</Link>
           <div className="dropContainer">Oops Sold Out!</div>
         </div>
       </div>
@@ -204,24 +144,21 @@ const Navbar = () => {
             <Link to={"/cart"}>
               <FaShoppingBag />
             </Link>
-            <button
-              //   onMouseEnter={() => setIsOpen((prev) => !prev)}
-              //   onMouseLeave={() => setIsOpen((prev) => !prev)}
-              onClick={() => setIsOpen((prev) => !prev)}
-            >
-              <FaUser />
-            </button>
-            <dialog open={isOpen}>
-              <div>
+            <div className="container">
+              <button>
+                <FaUser />
+              </button>
+              <div className="dropUser">
                 {user.role === "admin" && (
-                  <Link to={"/admin/dashboard"}>Admin</Link>
+                  <Link to={"/admin/dashboard"} className="udlLeft">Admin</Link>
                 )}
-                <Link to={"/orders"}>Orders</Link>
-                <button>
-                  <FaSignOutAlt />
+                <Link to={"/orders"} className="udlLeft">Orders</Link>
+                <button className="signOut">
+                  <FaSignOutAlt className="signOutIcon"/>
+                  <span className="signOutTxt">Sign Out</span>
                 </button>
               </div>
-            </dialog>
+            </div>
           </>
         ) : (
           <Link to={"/login"}>
