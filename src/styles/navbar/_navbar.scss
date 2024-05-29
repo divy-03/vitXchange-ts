@@ -208,36 +208,35 @@
           border-radius: 1rem;
           // width: 8rem;
           border: none;
-          background-color: $darkest;
+          background-color: $darkBlue;
           color: white;
           @include flex(row, center, center, 0);
           cursor: pointer;
           position: relative;
           overflow: hidden;
+          text-align: center;
           transition: all 0.3s ease;
 
           &:hover {
-            background-color: $darkBlue;
+            background-color: $lightBlue;
             padding-right: 1rem;
-            width: auto;
           }
 
           &:hover .signOutIcon {
-            // transform: translateX(0rem);
             width: 0;
           }
           &:hover .signOutTxt {
             opacity: 1;
-            width: 100%;
+            width: 3.5rem;
             transform: translateX(0);
-            // margin-left: 1rem;
           }
           > svg {
             transition: all 0.3s ease;
           }
           > span {
-            width: 0;
+            text-align: center;
             opacity: 0;
+            width: 0;
             white-space: nowrap;
             margin-left: 0;
             transform: translateX(-1rem);
