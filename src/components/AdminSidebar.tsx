@@ -19,7 +19,7 @@ import {
 const AdminSidebar = () => {
   const location = useLocation();
   return (
-    <aside>
+    <aside className="adminSide">
       <div>
         <Link to="/" className="logo">
           <span className="V">V</span>

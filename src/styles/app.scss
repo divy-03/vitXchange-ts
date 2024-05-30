@@ -4,6 +4,7 @@
 @import "products";
 @import "loader";
 @import "navbar/navbar";
+@import "navbar/cart";
 @import "footer";
 @import "cards/productCard";
 @import "cards/categoryCard";
@@ -17,6 +18,9 @@
 
   body {
     background-color: $violet;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
@@ -48,7 +52,7 @@
   // background-color: rgb(15, 15, 15);
 }
 
-aside {
+.adminSide {
   width: 20%;
   height: 100vh;
   background: linear-gradient(to bottom left, $darkBlue, $darkest);

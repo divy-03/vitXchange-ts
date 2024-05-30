@@ -1,0 +1,81 @@
+.cartNavContainer {
+  border: 2px solid;
+  visibility: hidden;
+  width: 0;
+}
+
+.cartContainer {
+  @include flex(column, space-between, center, 0);
+  height: calc(100vh - 5rem);
+  height: 100vh;
+  background-color: white;
+  z-index: 30;
+  top: 5rem;
+  top: 0;
+  position: fixed;
+  right: 0;
+  width: 0;
+  visibility: hidden;
+  opacity: 0;
+  box-shadow: rgba(67, 61, 61, 0.08) 0px 4px 12px;
+  transition: all 0.4s ease;
+
+  > .cartNav {
+    @include flex(row, center, center, 0);
+    position: fixed;
+    top: 0;
+    // background-color: yellow;
+    width: 40vw;
+    height: 5rem;
+
+    > h2 {
+      //   background-color: aqua;
+      text-align: center;
+      font-family: "Sansa";
+      font-weight: 900;
+      font-size: 2rem;
+    }
+    > button {
+      @include flex();
+      @include square(2rem);
+      color: white;
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      border: none;
+      border-radius: 50%;
+      background-color: rgb(255, 85, 50);
+      cursor: pointer;
+    }
+  }
+  > .cartItemContainer {
+    @include flex(column, start, center, 0);
+    background-color: $violet;
+    margin-top: 5rem;
+    width: 40vw;
+  }
+  > .cartDetails {
+    @include flex(column, center, center, 0.5rem);
+
+    > div {
+        @include flex(row, space-between, center, 0);
+        background-color: beige;
+        width: 40vw;
+    }
+    > button {
+        width: 40vw;
+        font-size: 1rem;
+        font-family: monospace;
+        padding: 1.5rem;
+    }
+    > button:nth-child(2) {
+        width: 39vw;
+    }
+  }
+}
+
+.cartShow {
+  visibility: visible;
+  width: 40vw;
+  opacity: 1;
+}

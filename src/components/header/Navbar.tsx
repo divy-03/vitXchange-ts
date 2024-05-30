@@ -5,11 +5,18 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Cart from "./Cart";
+import { useState } from "react";
 
 const user = { _id: "asdf", role: "admin" };
 
 const Navbar = () => {
+  const [cartActive, setCartActive] = useState<boolean>(false);
   const handleLogOut = () => {};
+
+  const handleCart = () => {
+    setCartActive((prev) => !prev);
+  };
 
   return (
     <nav className="navbar">
@@ -143,9 +150,13 @@ const Navbar = () => {
       <div className="navRight">
         {user?._id ? (
           <>
-            <Link to={"/cart"}>
+            {/* <Link to={"/cart"}><FaShoppingBag /></Link> */}
+            <button onClick={handleCart}>
               <FaShoppingBag />
-            </Link>
+            </button>
+            <div className="cartNavContainer">
+              <Cart cartActive={cartActive} setCartActive={setCartActive} />
+            </div>
             <div className="container">
               <button>
                 <FaUser />
