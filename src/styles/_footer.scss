@@ -1,14 +1,12 @@
 .footContainer {
-  background-color: $darkest;
+  background-color: $lightGrey;
   padding: 2rem 0;
   @include flex(row, space-around, center);
   transition: all 0.3s;
 
   .footLeft {
-    // width: 20%;
     > div {
         margin: auto;
-        // width: 120px;
         text-align: center;
     }
     > .vitLogo {
@@ -76,7 +74,7 @@
         padding: 5px;
 
         > a {
-          color: $lightGrey;
+          color: $darkest;
           font-size: 1rem;
           transition: all 0.2s;
           &:hover {
@@ -89,7 +87,6 @@
   }
 
   .footRight {
-    // width: 30%;
 
     > h1 {
       font-size: 1.1rem;
@@ -98,7 +95,7 @@
     > ul > li > a {
       padding: 10px 5px;
       font-size: 1.1rem;
-      color: $lightGrey;
+      color: $darkest;
       transition: all 0.2s;
       &:hover {
         color: white;

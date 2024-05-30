@@ -1,0 +1,19 @@
+{
+    "slides": [
+        {
+            "src": "https://t4.ftcdn.net/jpg/04/89/28/05/360_F_489280525_nISHfaWCctYBFlyYkTQUkzQwVOPWmyvp.jpg",
+            "alt": "Image1",
+            "url": "https://images.cdn3.stockunlimited.net/preview1300/mobile-shopping-banner_2022429.jpg"
+        },
+        {
+            "src": "https://img.freepik.com/free-vector/template-banner-online-store-with-shopping-cart-with-purchases-boxes-delivery-from-supermarket-vector-illustration_548887-104.jpg?w=2000",
+            "url": "https://img.freepik.com/free-vector/template-banner-online-store-with-shopping-cart-with-purchases-boxes-delivery-from-supermarket-vector-illustration_548887-104.jpg?w=2000",
+            "alt": "Image2"
+        },
+        {
+            "src": "https://marketplace.canva.com/EAFoiOm3n50/1/0/1600w/canva-blue-minimalist-skincare-promotion-banner-S439B50Q7DE.jpg",
+            "url": "https://images.cdn2.stockunlimited.net/preview1300/mobile-shopping-banner_2022428.jpg",
+            "alt": "Image3"
+        }
+    ]
+}

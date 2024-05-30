@@ -5,6 +5,9 @@
 @import "loader";
 @import "navbar/navbar";
 @import "footer";
+@import "cards/productCard";
+@import "carousel/carousel.scss";
+@import "home";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

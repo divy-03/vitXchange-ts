@@ -1,8 +1,11 @@
+import Caraousel from "../components/carsousel/Caraousel";
 
 const Home = () => {
   return (
-    <div style={{height: "100vh", backgroundColor: "pink"}}>Home</div>
-  )
-}
+    <div className="homeContainer">
+      <Caraousel />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

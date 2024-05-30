@@ -106,6 +106,7 @@
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 20;
 
   .navLeft {
     @include flex(row, center, center, 0);

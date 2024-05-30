@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 const user = { _id: "asdf", role: "admin" };
 
 const Navbar = () => {
+  const handleLogOut = () => {};
+
   return (
     <nav className="navbar">
       <div className="navLeft">
@@ -150,11 +152,15 @@ const Navbar = () => {
               </button>
               <div className="dropUser">
                 {user.role === "admin" && (
-                  <Link to={"/admin/dashboard"} className="udlLeft">Admin</Link>
+                  <Link to={"/admin/dashboard"} className="udlLeft">
+                    Dashboard
+                  </Link>
                 )}
-                <Link to={"/orders"} className="udlLeft">Orders</Link>
-                <button className="signOut">
-                  <FaSignOutAlt className="signOutIcon"/>
+                <Link to={"/orders"} className="udlLeft">
+                  Orders
+                </Link>
+                <button className="signOut" onClick={handleLogOut}>
+                  <FaSignOutAlt className="signOutIcon" />
                   <span className="signOutTxt">Sign Out</span>
                 </button>
               </div>
