@@ -1,4 +1,11 @@
 .homeContainer {
     margin-top: 6rem;
     // height: 100vh;
+
+    > h2 {
+        margin: 0 1rem;
+        font-family: "Sansa";
+        font-weight: 900;
+        text-decoration: underline;
+    }
 }

@@ -12,7 +12,7 @@
     > .vitLogo {
       height: 200px;
       width: 200px;
-      background-color: rgb(40, 40, 40, 1);
+      background-color: $darkest;
       border-radius: 100%;
       font-size: 4rem;
       text-align: center;
@@ -58,11 +58,9 @@
   }
 
   .footCenter {
-    // width: 50%;
     @include flex(row, space-between, start, 3vw);
 
     > div {
-    //   width: 33%;
 
       > h1 {
         color: rgb(255, 84, 84);
@@ -78,7 +76,7 @@
           font-size: 1rem;
           transition: all 0.2s;
           &:hover {
-            color: white;
+            color: $darkBlue;
             text-decoration: underline;
           }
         }
@@ -98,7 +96,7 @@
       color: $darkest;
       transition: all 0.2s;
       &:hover {
-        color: white;
+        color: $darkBlue;
         text-decoration: underline;
       }
     }

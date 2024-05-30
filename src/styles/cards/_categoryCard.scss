@@ -1,0 +1,36 @@
+.containerBan {
+  @include flex(row, space-between, center, 1em);
+  flex-wrap: wrap;
+  margin: 0 1rem;
+}
+
+.containerCat {
+  @include flex(row, center, center, 0);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 0.5rem;
+  transition: all 0.4s;
+  position: relative;
+  margin: 1rem 0;
+  overflow: hidden;
+  transition: all 0.4s;
+
+  &:hover {
+    transform: scale(1.03) translateY(-0.25rem);
+  }
+
+  > img {
+    min-width: 15vw;
+    margin: 0;
+    padding: 0;
+    height: auto;
+  }
+
+  > h2 {
+    position: absolute;
+    top: 1.5rem;
+    color: white;
+    left: 10%;
+    font-size: 1.5rem;
+    font-family: "Sansa";
+  }
+}
