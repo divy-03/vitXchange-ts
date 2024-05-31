@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { FaX } from "react-icons/fa6";
+import { FaMessage, FaX } from "react-icons/fa6";
+import { MdPayment } from "react-icons/md";
 
 type Props = {
   cartActive: boolean;
@@ -34,8 +35,11 @@ const Cart = ({ cartActive, setCartActive }: Props) => {
           <b>Total</b>
           <b>₹{fixedPrice}/-</b>
         </div>
-        <button>Chat with Seller</button>
-        <button>Order</button>
+        <button>
+          Chat with Seller 
+          <FaMessage />
+        </button>
+        <button>Order <MdPayment /></button>
       </div>
     </aside>
   );

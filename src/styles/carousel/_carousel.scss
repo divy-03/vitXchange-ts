@@ -3,7 +3,7 @@
   position: relative;
   margin: 1rem;
   box-shadow: rgba(67, 61, 61, 0.08) 0px 4px 12px;
-  background-color: yellow;
+  background-color: $lightBlue;
 
   &:hover .slideBtn {
     opacity: 1;
@@ -56,12 +56,13 @@
   }
   .indicators {
     display: flex;
-    position: absolute;
     bottom: 1rem;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 11;
+    position: absolute;
     left: 50%;
+    transform: translateX(-50%);
 
     .indicator {
       background-color: white;
