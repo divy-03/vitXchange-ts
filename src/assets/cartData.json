@@ -1,0 +1,20 @@
+{
+    "cartItems": [
+        {
+            "id": "asdas",
+            "photo": "https://www.ingenstudio.com/blog/wp-content/uploads/2016/08/eCommerce-Product-Photography-Tips.jpg",
+            "name": "Chelsea Boot",
+            "price": 2000,
+            "quantity": 2,
+            "stock": 10
+        },
+        {
+            "id": "asasfw",
+            "photo": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQSgjH8XgNZkIqpuNPn2cZVDX4HrtVvpiGqjPFd7QNl_H1-tTCtnuKcqj6U6Q-0W1ni2FQ2Bm0mcgsYNG5P9Xj_YVVUq-ktfQ-5HS_CF8xefXk4v5hG4QLJ",
+            "name": "Macbook Pro",
+            "price": 200000,
+            "quantity": 1,
+            "stock": 10
+        }
+    ]
+}

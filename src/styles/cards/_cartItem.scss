@@ -1,0 +1,82 @@
+.cartItem {
+  @include flex(row, space-between, center, 0);
+  width: 100%;
+//   border-top: 1px solid $violet;
+  outline: 1px solid $violet;
+
+  height: 10rem;
+
+  > img {
+    @include square(10rem);
+    border-right: 1px solid $violet;
+  }
+  > div {
+    > a {
+      color: black;
+      font-family: "Sansa";
+      font-weight: 900;
+      font-size: 2rem;
+      margin: 2px;
+    }
+  }
+  > div {
+    @include flex(row, center, center, 0);
+
+    > p {
+      @include flex();
+      border: 1px solid $violet;
+      @include square(2rem);
+      text-align: center;
+    }
+
+    > button {
+      font-size: 2rem;
+      @include flex();
+      background: none;
+      @include square(2rem);
+      border: none;
+      cursor: pointer;
+    }
+  }
+  > button {
+    height: 100%;
+    padding: 1rem;
+    border: none;
+    background: none;
+    @include flex(row, center, center, 0);
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 15%;
+
+    &:hover {
+        background-color: $darkest;
+        // padding-right: 1rem;
+    }
+    &:hover .deleteIcon {
+        width: 0;
+    }
+    &:hover .deleteTxt {
+        opacity: 1;
+        width: 4rem;
+        transform: translateX(0);
+    }
+    > svg {
+        transition: all 0.3s ease;
+        font-size: 1.5rem;
+    }
+    > span {
+        text-align: center;
+        color: white;
+        font-size: 1.2rem;
+        opacity: 0;
+        width: 0;
+        white-space: nowrap;
+        margin-left: 0;
+        transform: translateX(-1rem);
+        transition: all 0.3s ease;
+    }
+  }
+}

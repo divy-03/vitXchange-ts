@@ -100,7 +100,7 @@
 
 .navbar {
   @include flex(row, space-between, center);
-  background-color: #f9f5ff;
+  background-color: #faf7ff;
   height: 5rem;
   position: fixed;
   width: 100%;
@@ -169,6 +169,7 @@
         display: inline-block;
         color: black;
         font-family: "Sansa";
+        letter-spacing: 2px;
         font-weight: 700;
 
         &::after {

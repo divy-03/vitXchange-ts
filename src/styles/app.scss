@@ -8,8 +8,10 @@
 @import "footer";
 @import "cards/productCard";
 @import "cards/categoryCard";
+@import "cards/cartItem";
 @import "carousel/carousel.scss";
 @import "home";
+@import "shipping";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

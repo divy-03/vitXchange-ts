@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navLeft">
+      <div className="navLeft" onClick={() => setCartActive(false)}>
         <Link to="/" className="logo">
           <span className="V">V</span>
           <span className="X">X</span>
