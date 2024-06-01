@@ -4,7 +4,7 @@ import { MdPayment } from "react-icons/md";
 import CartItem from "../cards/cartItem";
 import data from "../../assets/cartData.json";
 import { BsCartPlus } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type Props = {
   cartActive: boolean;
@@ -13,7 +13,9 @@ type Props = {
 
 const fixedPrice = 2000;
 const cartItems = data.cartItems;
+
 const Cart = ({ cartActive, setCartActive }: Props) => {
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState<boolean>(cartActive);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ const Cart = ({ cartActive, setCartActive }: Props) => {
 
   const handleOrder = () => {
     setCartActive(!isActive);
+    navigate("/shipping");
   };
 
   return (

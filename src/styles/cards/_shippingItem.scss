@@ -1,0 +1,46 @@
+.shipItem {
+  @include flex(row, space-between, center, 0);
+  width: 100%;
+
+  > div {
+    @include flex();
+    > div {
+      margin-right: 2rem;
+      > a {
+        color: $darkest;
+        font-family: "Sansa";
+        letter-spacing: 1px;
+        font-weight: 900;
+      }
+    }
+    > div:first-child {
+      position: relative;
+      margin: 0;
+      border-radius: 0.5rem;
+      @include square(5rem);
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+      > img {
+        @include square(5rem);
+        border-radius: 0.5rem;
+      }
+      > p {
+        @include flex();
+        border-radius: 50%;
+        position: absolute;
+        z-index: 30;
+        right: -0.5rem;
+        top: -0.5rem;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        background-color: $lightGrey;
+        @include square(1.3rem);
+        font-size: 0.8rem;
+      }
+    }
+  }
+  > h3 {
+    font-family: "Sansa";
+    font-weight: 900;
+    margin-left: 10vw;
+  }
+}

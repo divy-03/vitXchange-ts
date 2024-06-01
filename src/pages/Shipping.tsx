@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import data from "../assets/cartData.json";
 import { useNavigate } from "react-router-dom";
+import ShippingCard from "../components/cards/ShippingItem";
 const cartItems = data.cartItems;
 
 const Shipping = () => {
@@ -15,6 +16,7 @@ const Shipping = () => {
     block: "",
     wing: "",
     roomNo: "",
+    paymentMethod: "",
   });
 
   const changeHandler = (
@@ -25,7 +27,7 @@ const Shipping = () => {
 
   useEffect(() => {
     if (cartItems.length <= 0) return navigate("/");
-  }, [cartItems]);
+  }, [cartItems, navigate]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,9 +36,10 @@ const Shipping = () => {
   return (
     <div className="shippingContainer">
       <div className="shippingDetails">
-        {/* <button>Chat with Seller</button> */}
         <form onSubmit={handleSubmit}>
-          <h2>Shipping Address</h2>
+          <h2>
+            <span>1</span>Delivery Info
+          </h2>
           <input
             type="text"
             required
@@ -98,7 +101,7 @@ const Shipping = () => {
           >
             <option value="">Choose Wing</option>
             <option value="a">A Wing</option>
-            <option value="b">B wing</option>
+            <option value="b">B Wing</option>
           </select>
           <input
             type="text"
@@ -108,11 +111,40 @@ const Shipping = () => {
             value={shippingInfo.roomNo}
             placeholder="Room No."
           />
+          
+          <h2>
+            <span>2</span>Payment Method
+          </h2>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="cashOnDelivery"
+                checked={shippingInfo.paymentMethod === "cashOnDelivery"}
+                onChange={changeHandler}
+              />
+              Cash on Delivery
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="onlinePayment"
+                checked={shippingInfo.paymentMethod === "onlinePayment"}
+                onChange={changeHandler}
+              />
+              Online Payment
+            </label>
+          </div>
+          
           {/* <button type="submit">Pay Now</button> */}
         </form>
       </div>
       <div className="orderSummary">
         <h2>Order Summary</h2>
+        {/* Include order summary details here */}
+        {cartItems.map((i, idx) => <ShippingCard  key={idx} cart={i}/>)}
       </div>
     </div>
   );

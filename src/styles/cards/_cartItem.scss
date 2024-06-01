@@ -1,9 +1,7 @@
 .cartItem {
   @include flex(row, space-between, center, 0);
   width: 100%;
-//   border-top: 1px solid $violet;
   outline: 1px solid $violet;
-
   height: 10rem;
 
   > img {
