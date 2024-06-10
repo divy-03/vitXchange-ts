@@ -22,7 +22,9 @@ const ShippingItem = ({ cart }: shippingProps) => {
           </Link>
         </div>
       </div>
-      <h3>₹{price}/-</h3>
+      <div>
+        <h4>₹{price}/-</h4>
+      </div>
     </div>
   );
 };

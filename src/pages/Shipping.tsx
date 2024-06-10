@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 import ShippingCard from "../components/cards/ShippingItem";
 const cartItems = data.cartItems;
 
+const subTotal: number = 200200;
+const tax: number = Math.round(subTotal * 0.18);
+const shippingCharges: number = 200;
+const discount: number = 500;
+const total = subTotal + tax + shippingCharges - discount;
+
 const Shipping = () => {
   const navigate = useNavigate();
 
@@ -36,6 +42,7 @@ const Shipping = () => {
   return (
     <div className="shippingContainer">
       <div className="shippingDetails">
+        <h2>Shipping Info</h2>
         <form onSubmit={handleSubmit}>
           <h2>
             <span>1</span>Delivery Info
@@ -111,7 +118,7 @@ const Shipping = () => {
             value={shippingInfo.roomNo}
             placeholder="Room No."
           />
-          
+
           <h2>
             <span>2</span>Payment Method
           </h2>
@@ -137,14 +144,35 @@ const Shipping = () => {
               Online Payment
             </label>
           </div>
-          
+
           {/* <button type="submit">Pay Now</button> */}
         </form>
       </div>
       <div className="orderSummary">
         <h2>Order Summary</h2>
-        {/* Include order summary details here */}
-        {cartItems.map((i, idx) => <ShippingCard  key={idx} cart={i}/>)}
+        {cartItems.map((i, idx) => (
+          <ShippingCard key={idx} cart={i} />
+        ))}
+        <div>
+          <span>Subtotal:</span>
+          <span>₹{subTotal}</span>
+        </div>
+        <div>
+          <span>ShippinCharges:</span>
+          <span>₹{shippingCharges}</span>
+        </div>
+        <div>
+          <span>Tax:</span>
+          <span>₹{tax}</span>
+        </div>
+        <div>
+          <span>Discount:</span>
+          <em>-₹{discount}</em>
+        </div>
+        <div>
+          <b>Total:</b>
+          <b>₹{total}</b>
+        </div>
       </div>
     </div>
   );
