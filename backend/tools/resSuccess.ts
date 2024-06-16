@@ -3,12 +3,12 @@ import { ValidationError } from "express-validator";
 
 const resError = (
   statusCode: number,
-  error: string | ValidationError[],
+  message: string | ValidationError[],
   res: Response
 ) => {
   res.status(statusCode).json({
-    success: false,
-    error: error,
+    success: true,
+    message: message,
   });
 };
 

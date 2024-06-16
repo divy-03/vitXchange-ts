@@ -17,7 +17,9 @@ const sendToken = (user: User, statusCode: number, res: Response) => {
     },
   };
 
-  const authToken = jwt.sign(data, process.env.JWT_SECRET);
+  const authToken = jwt.sign(data, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE_TIME || "1d",
+  });
 
   const options = {
     expires: new Date(

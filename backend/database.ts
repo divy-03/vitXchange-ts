@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDatabase = () => {
   mongoose
-    .connect("mongodb://127.0.0.1:27017/vitXchange")
+    .connect(String(process.env.MONGODB_URI))
     .then((data) => {
       console.log(`MongoDB connected with server: ${data.connection.host}`);
     })
