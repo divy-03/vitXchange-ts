@@ -1,21 +1,33 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
-const bcryptjs = require("bcryptjs");
+import sendToken from "../utils/sendToken";
+import { Document } from "mongoose";
+const bcrypt = require("bcryptjs");
 const catchAsyncError = require("../middleware/catchAsyncError");
+
+const mapUserDocumentToUser = (userDoc: Document) => {
+  const userObj = userDoc.toObject();
+  return {
+    id: userObj._id.toString(),
+    name: userObj.name,
+    email: userObj.email,
+    password: userObj.password,
+    role: userObj.role,
+  };
+};
 
 exports.registerUser = catchAsyncError(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
-  // const salt = await bcryptjs.gensalt(10);
-  // const secPass = await bcryptjs.hash(password, salt);
+  const salt = await bcrypt.genSaltSync(10);
+  const secPass = await bcrypt.hashSync(password, salt);
 
-  const user = await User.create({
+  const userDoc = await User.create({
     name,
     email,
-    password,
+    password: secPass,
   });
 
-  return res.status(201).json({
-    success: true,
-    user,
-  });
+  const user = mapUserDocumentToUser(userDoc);
+
+  return sendToken(user, 201, res);
 });
