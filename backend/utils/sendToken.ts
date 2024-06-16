@@ -24,6 +24,8 @@ const sendToken = (user: User, statusCode: number, res: Response) => {
       Date.now() + Number(process.env.COOKIE_EXPIRE || 1) * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none" as const,
   };
 
   res.cookie("authToken", authToken, options);
