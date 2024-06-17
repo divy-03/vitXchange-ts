@@ -13,6 +13,7 @@
 @import "carousel/carousel.scss";
 @import "home";
 @import "shipping";
+@import "login";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -33,6 +34,10 @@
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
+}
+
+.toastContainer {
+  position: absolute;
 }
 
 .red {

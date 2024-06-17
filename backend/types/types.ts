@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export interface NewUserRequestBody {
   name: string;

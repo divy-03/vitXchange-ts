@@ -1,0 +1,10 @@
+.loginContainer {
+  height: 100vh;
+  @include flex();
+  > div {
+    
+    > form {
+        @include flex(column);
+    }
+  }
+}

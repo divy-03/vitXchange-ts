@@ -6,6 +6,7 @@ import { NewUserRequestBody } from "../types/types";
 const bcrypt = require("bcryptjs");
 import { check, validationResult } from "express-validator";
 import resError from "../tools/resError";
+import resSuccess from "../tools/resSuccess";
 const catchAsyncError = require("../middleware/catchAsyncError");
 
 const mapUserDocumentToUser = (userDoc: Document) => {
@@ -63,5 +64,21 @@ exports.loginUser = catchAsyncError(
         return sendToken(user, 200, res);
       }
     }
+  }
+);
+
+exports.logOutUser = catchAsyncError(async (req: Request, res: Response) => {
+  res.cookie("xToken", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  resSuccess(200, "Logged out Successfully", res);
+});
+
+exports.getCookieToken = catchAsyncError(
+  async (req: Request, res: Response) => {
+    const token = req.cookies.xToken;
+    resSuccess(200, token, res);
   }
 );

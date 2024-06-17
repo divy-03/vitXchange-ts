@@ -6,17 +6,46 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useGetCookieMutation, useLogoutUserMutation } from "../../RTK/UserApi";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const user = { _id: "asdf", role: "admin" };
 
 const Navbar = () => {
+  const [logoutUser] = useLogoutUserMutation();
+  const [getCookie] = useGetCookieMutation();
   const [cartActive, setCartActive] = useState<boolean>(false);
-  const handleLogOut = () => {};
+  const handleLogOut = async () => {
+    try {
+      const result = await logoutUser({});
+      if (result.error) {
+        const fetchError = result.error as FetchBaseQueryError;
+        if (fetchError.data as { error: string })
+          return toast.error((fetchError.data as { error: string }).error);
+      }
+      if (result.data.success === true) {
+        toast.success(result.data.message);
+      }
+    } catch (error) {
+      toast.error(String(error));
+    }
+  };
 
   const handleCart = () => {
     setCartActive((prev) => !prev);
   };
+
+  useEffect(() => {
+    getCookie({})
+      .then((result) => {
+        console.log(result.data.message);
+      })
+      .catch((error) => {
+        console.error("Error fetching the token:", error);
+      });
+  }, []);
 
   return (
     <nav className="navbar">

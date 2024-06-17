@@ -13,6 +13,7 @@ interface User {
 const sendToken = (user: User, statusCode: number, res: Response) => {
   const data = {
     user: {
+      email: user.email,
       id: user.id,
     },
   };
@@ -27,10 +28,10 @@ const sendToken = (user: User, statusCode: number, res: Response) => {
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "none" as const,
+    // sameSite: "none" as const,
   };
 
-  res.cookie("authToken", authToken, options);
+  res.cookie("xToken", authToken, options);
 
   return res.status(statusCode).json({
     success: true,
