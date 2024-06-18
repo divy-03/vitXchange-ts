@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import data from "../assets/cartData.json";
 import { useNavigate } from "react-router-dom";
 import ShippingCard from "../components/cards/ShippingItem";
+import useAuthGuard from "../tools/AuthGuard";
 const cartItems = data.cartItems;
 
 const subTotal: number = 200200;
@@ -11,6 +12,7 @@ const discount: number = 500;
 const total = subTotal + tax + shippingCharges - discount;
 
 const Shipping = () => {
+  useAuthGuard();
   const navigate = useNavigate();
 
   const [shippingInfo, setShippingInfo] = useState({

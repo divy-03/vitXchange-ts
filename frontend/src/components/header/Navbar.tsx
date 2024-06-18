@@ -1,22 +1,27 @@
-import {
-  FaShoppingBag,
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaUser,
-} from "react-icons/fa";
+import { FaShoppingBag, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { useGetCookieMutation, useLogoutUserMutation } from "../../RTK/UserApi";
+import { useLogoutUserMutation } from "../../RTK/UserApi";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { FiLogIn } from "react-icons/fi";
 
-const user = { _id: "asdf", role: "admin" };
+type navProps = {
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    __v: number;
+  }
+}
 
-const Navbar = () => {
+
+const Navbar = ({user}: navProps) => {
   const [logoutUser] = useLogoutUserMutation();
-  const [getCookie] = useGetCookieMutation();
   const [cartActive, setCartActive] = useState<boolean>(false);
+
   const handleLogOut = async () => {
     try {
       const result = await logoutUser({});
@@ -36,16 +41,6 @@ const Navbar = () => {
   const handleCart = () => {
     setCartActive((prev) => !prev);
   };
-
-  useEffect(() => {
-    getCookie({})
-      .then((result) => {
-        console.log(result.data.message);
-      })
-      .catch((error) => {
-        console.error("Error fetching the token:", error);
-      });
-  }, []);
 
   return (
     <nav className="navbar">
@@ -207,8 +202,9 @@ const Navbar = () => {
             </div>
           </>
         ) : (
-          <Link to={"/login"}>
-            <FaSignInAlt />
+          <Link to={"/login"} className="login">
+            <FiLogIn className="loginIcon" />
+            <span className="loginTxt">Sign in</span>
           </Link>
         )}
       </div>

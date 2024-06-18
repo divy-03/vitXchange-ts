@@ -6,21 +6,10 @@ import { BarChart, DoughnutChart } from "../components/Charts";
 import { Link } from "react-router-dom";
 import { BiMaleFemale } from "react-icons/bi";
 import Table from "../components/DashboardTable";
-import { useEffect } from "react";
-import { useGetCookieMutation } from "../RTK/UserApi";
+import useAuthGuard from "../tools/AuthGuard";
 
 const Dashboard = () => {
-  const [getCookie] = useGetCookieMutation();
-  useEffect(() => {
-    getCookie({})
-      .then((result) => {
-        console.log(result.data.message);
-      })
-      .catch((error) => {
-        console.error("Error fetching the token:", error);
-      });
-  }, []);
-
+  useAuthGuard();
   return (
     <div className="adminContainer">
       <main className="dashboard">

@@ -6,13 +6,12 @@ import {
 } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 // import jwt from "jsonwebtoken";
-import { JwtPayload, jwtDecode } from "jwt-decode";
 import Loader from "./components/Loader";
 import Navbar from "./components/header/Navbar";
 import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useGetCookieMutation } from "./RTK/UserApi";
+import { useGetUserMutation } from "./RTK/UserApi";
 
 const Admin = lazy(() => import("./admin/Admin"));
 const Home = lazy(() => import("./pages/Home"));
@@ -23,32 +22,52 @@ const Register = lazy(() => import("./pages/SignUp"));
 const App = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
-  const [user, setUser] = useState<JwtPayload>();
+  const [getUser] = useGetUserMutation();
 
-  const [getCookie] = useGetCookieMutation();
+  interface User {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    __v: number;
+  }
+
+  const [user, setUser] = useState<User>({
+    _id: "",
+    name: "",
+    email: "",
+    role: "",
+    __v: 0,
+  });
+
   useEffect(() => {
-    getCookie({})
+    getUser({})
       .then((result) => {
-        const token = jwtDecode(result.data.message);
-        setUser(token);
-        console.log(user);
+        setUser(result.data.user);
       })
       .catch((error) => {
-        console.error("Error fetching the token:", error);
-        setUser(undefined);
+        console.log("Error fetching the token:", error);
+        setUser({
+          _id: "",
+          email: "",
+          name: "",
+          role: "",
+          __v: 0,
+        });
       });
-  }, []);
+    getUser;
+  }, [user]);
 
   return (
     <Suspense fallback={<Loader />}>
-      {!isAdminRoute && <Navbar />}
+      {!isAdminRoute && <Navbar user={user} />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route>
           <Route path="/shipping" element={<Shipping />} />
         </Route>
-        {user && <Route path="/admin/*" element={<Admin />} />}
+        {user.role === "admin" && <Route path="/admin/*" element={<Admin />} />}
         <Route path="/" element={<Home />} />
       </Routes>
       <div className="toastContainer">

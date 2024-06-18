@@ -30,10 +30,17 @@ export const userApi = createApi({
       }),
     }),
 
+    getUser: builder.mutation({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+      }),
+    }),
+
     getCookie: builder.mutation({
       query: () => ({
         url: "/auth/cookie",
-        method: "GET"
+        method: "GET",
       }),
     }),
   }),
@@ -43,5 +50,6 @@ export const {
   useAddUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
+  useGetUserMutation,
   useGetCookieMutation,
 } = userApi;

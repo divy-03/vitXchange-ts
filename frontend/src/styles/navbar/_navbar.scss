@@ -213,7 +213,7 @@
           color: black;
         }
         > button {
-          padding: 1rem;
+          padding: .5rem 1rem;
           border-radius: 1rem;
           // width: 8rem;
           border: none;
@@ -252,7 +252,6 @@
             transition: all 0.3s ease;
           }
         }
-        
       }
       > button {
         @include square(3rem);
@@ -261,6 +260,47 @@
         background-color: $lightGrey;
         color: $darkBlue;
         cursor: pointer;
+      }
+    }
+    > .login {
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      border: none;
+      background-color: $darkBlue;
+      color: white;
+      @include flex(row, center, center, 0);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      transition: all 0.3s ease;
+      width: 5rem;
+      margin-right: 2rem;
+
+      &:hover {
+        background-color: $lightBlue;
+        padding-right: 1rem;
+      }
+
+      &:hover .loginIcon {
+        width: 0;
+      }
+      &:hover .loginTxt {
+        opacity: 1;
+        width: 3.5rem;
+        transform: translateX(0);
+      }
+      > svg {
+        transition: all 0.3s ease;
+      }
+      > span {
+        text-align: center;
+        opacity: 0;
+        width: 0;
+        white-space: nowrap;
+        margin-left: 0;
+        transform: translateX(-1rem);
+        transition: all 0.3s ease;
       }
     }
   }

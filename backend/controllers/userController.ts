@@ -39,7 +39,7 @@ exports.registerUser = catchAsyncError(
 );
 
 exports.loginUser = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { email, password } = req.body;
     await check("email", "Please enter a valid email").isEmail().run(req);
     await check("password", "Please enter a password").notEmpty().run(req);
@@ -82,3 +82,13 @@ exports.getCookieToken = catchAsyncError(
     resSuccess(200, token, res);
   }
 );
+
+exports.getUser = catchAsyncError(async (req: Request, res: Response) => {
+  const filter = req.user ? { _id: req.user._id } : {}; // Filter by ID if available
+  const user = await User.findOne(filter);
+
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
