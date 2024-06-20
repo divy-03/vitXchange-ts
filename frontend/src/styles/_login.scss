@@ -1,6 +1,6 @@
 .loginContainer {
   margin-top: 5rem;
-  height: calc(100vh - 5rem);
+  height: calc(100dvh - 5rem);
   @include flex();
   // background: url(https://picsum.photos/1500/800) rgba(20, 21, 28, 0.9);
   // background-blend-mode:darken;
@@ -8,9 +8,12 @@
   // backdrop-filter: blur(5px);
 
   > div:first-child {
-    height: 70vh;
+    height: 70dvh;
     width: calc(15rem + 10vw);
-    background-color: $darkest;
+    background: rgba(38, 41, 58, 0.8);
+    background-blend-mode: darken;
+    backdrop-filter: blur(5px); 
+    // background-color: $darkest;
     // position: relative;
     position: absolute;
     @include flex(column, center, center);
@@ -83,7 +86,7 @@
     background: rgba(38, 41, 58, 0.8);
     background-blend-mode: darken;
     backdrop-filter: blur(5px);
-    height: 70vh;
+    height: 75%;
     width: calc(15rem + 10vw);
     overflow: hidden;
     position: relative;
@@ -93,7 +96,7 @@
     > div:first-child {
       @include flex(row, space-around, center, 0);
       // background-color: $Grey;
-      height: 10vh;
+      height: 12%;
       width: calc(10rem + 10vw);
       position: relative;
 
@@ -123,9 +126,9 @@
 
     > div:nth-child(2) {
       @include flex(row, center, flex-end, 0);
-      top: 10vh;
+      top: 42%;
       position: absolute;
-      height: 60vh;
+      height: 60%;
       // background-color: $Grey;
       transition: all 0.8s;
 

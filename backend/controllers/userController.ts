@@ -107,7 +107,8 @@ exports.forgotPassword = catchAsyncError(
 
     await user.save({ validateBeforeSave: false });
 
-    const resetPasswordUrl = `${resetToken}`;
+    const resetPasswordUrl = `${process.env.CLIENT_BASE_URL}/reset/${resetToken}`;
+    // return resSuccess(200, resetPasswordUrl, res);
 
     const message = `Your password reset link is => \n\n ${resetPasswordUrl} \n\nIf you have not requested to reset password then please ignore this mail`;
     try {
@@ -163,6 +164,47 @@ exports.resetPassword = catchAsyncError(async (req: Request, res: Response) => {
   user.resetPasswordToken = undefined;
 
   await user.save();
-  const userUpdate = mapUserDocumentToUser(user);
-  sendToken(userUpdate, 200, res);
+  const userObj = mapUserDocumentToUser(user);
+  sendToken(userObj, 200, res);
+});
+
+exports.updatePassword = catchAsyncError(
+  async (req: Request, res: Response) => {
+    const user = await User.findById(req.user?._id).select("+password");
+
+    const passswordCompare = await bcrypt.compareSync(
+      req.body.oldPassword,
+      user?.password
+    );
+
+    if (!passswordCompare) {
+      return resError(401, "Password not matched", res);
+    }
+
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      return resError(401, "New password not matched", res);
+    }
+
+    const salt = await bcrypt.genSaltSync(10);
+    const secPass = await bcrypt.hashSync(req.body.newPassword, salt);
+
+    if (user) {
+      user.password = secPass;
+    }
+
+    await user?.save();
+
+    if (user) return sendToken(user.toObject(), 200, res);
+  }
+);
+
+exports.updateProfile = catchAsyncError(async (req: Request, res: Response) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  // TODO: avatar image
+
+  await User.findByIdAndUpdate(req.user?._id);
 });

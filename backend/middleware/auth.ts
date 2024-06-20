@@ -1,19 +1,12 @@
 import { Request, NextFunction, Response } from "express";
-import userModel from "../models/userModel";
-import catchAsyncErrors = require("./catchAsyncError");
+import userModel, { IUser } from "../models/userModel";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import resError from "../tools/resError";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: {
-        name: string;
-        email: string;
-        password: string;
-        _id: string;
-        role: string;
-      };
+      user?: IUser;
     }
   }
 }

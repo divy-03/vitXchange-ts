@@ -100,7 +100,7 @@
 }
 
 .adminContainer {
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 80%;
   margin-left: auto;
   overflow-y: auto;
@@ -109,7 +109,7 @@
 
 .adminSide {
   width: 20%;
-  height: 100vh;
+  height: 100dvh;
   background: linear-gradient(to bottom left, $darkBlue, $darkest);
   z-index: 10;
   overflow-y: auto;

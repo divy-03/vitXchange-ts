@@ -14,11 +14,10 @@ type navProps = {
     email: string;
     role: string;
     __v: number;
-  }
-}
+  };
+};
 
-
-const Navbar = ({user}: navProps) => {
+const Navbar = ({ user }: navProps) => {
   const [logoutUser] = useLogoutUserMutation();
   const [cartActive, setCartActive] = useState<boolean>(false);
 
@@ -32,7 +31,9 @@ const Navbar = ({user}: navProps) => {
       }
       if (result.data.success === true) {
         toast.success(result.data.message);
-        location.reload();
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
       }
     } catch (error) {
       toast.error(String(error));

@@ -71,9 +71,9 @@ const Login = () => {
     if ("error" in result) {
       const fetchError = result.error as FetchBaseQueryError;
       if (fetchError.data && isFetchErrorData(fetchError.data)) {
-        toast.error(fetchError.data.error);
+        return toast.error(fetchError.data.error);
       } else {
-        toast.error("An unexpected error occurred.");
+        return toast.error("An unexpected error occurred.");
       }
     }
 
@@ -191,7 +191,7 @@ const Login = () => {
             <form className="registerForm" onSubmit={registerSubmit}>
               <input
                 type="text"
-                placeholder="User"
+                placeholder="Name"
                 name="name"
                 value={user.name}
                 required

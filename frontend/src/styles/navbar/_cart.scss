@@ -8,8 +8,8 @@ $cartWidth: 47vw;
 
 .cartContainer {
   @include flex(column, space-between, center, 0);
-  height: calc(100vh - 5rem);
-  height: 100vh;
+  height: calc(100dvh - 5rem);
+  height: 100dvh;
   background-color: white;
   z-index: 30;
   top: 5rem;
@@ -53,7 +53,7 @@ $cartWidth: 47vw;
   > .cartItemContainer {
     @include flex(column, start, center, 0);
     z-index: inherit;
-    min-height: 55.5vh;
+    min-height: 55.5dvh;
     margin-top: 5rem;
     overflow-y: auto;
     width: $cartWidth;

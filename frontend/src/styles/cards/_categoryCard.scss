@@ -1,7 +1,6 @@
 .containerBan {
   @include flex(row, space-between, center, 1em);
   flex-wrap: wrap;
-  margin: 0 1rem;
 }
 
 .containerCat {

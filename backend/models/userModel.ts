@@ -2,7 +2,7 @@ import mongoose, { Document, Model } from "mongoose";
 import validator from "validator";
 import crypto from "crypto";
 
-interface IUser extends Document {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
