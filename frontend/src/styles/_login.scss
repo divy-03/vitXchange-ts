@@ -1,10 +1,182 @@
 .loginContainer {
-  height: 100vh;
+  margin-top: 5rem;
+  height: calc(100vh - 5rem);
   @include flex();
-  > div {
-    
+  // background: url(https://picsum.photos/1500/800) rgba(20, 21, 28, 0.9);
+  // background-blend-mode:darken;
+  // background-size: cover;
+  // backdrop-filter: blur(5px);
+
+  > div:first-child {
+    height: 70vh;
+    width: calc(15rem + 10vw);
+    background-color: $darkest;
+    // position: relative;
+    position: absolute;
+    @include flex(column, center, center);
+    border-radius: 1rem;
+    color: $violet;
+    @include sansa();
+    transition: all 0.8s;
+    transition-delay: all 0.8s;
+    padding: 2rem;
+
+    > button {
+      @include btn();
+      color: $violet;
+      border-bottom: 5px solid rgb(255, 85, 85);
+      border-top: 5px solid rgb(255, 85, 85);
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      // margin-bottom: 2rem;
+    }
+
+    > div {
+      font-size: 10rem;
+      color: $Grey;
+      border: 5px solid rgb(45, 217, 218);
+      // background-color: $darkBlue;
+      margin: 0;
+      > svg {
+        border-radius: 50%;
+        transform: translateX(-5px);
+      }
+    }
+
     > form {
+      @include flex(column, start, start);
+      width: 100%;
+
+      > input {
+        padding: 0.5rem;
+        width: 100%;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        @include sansa();
+      }
+
+      > input[type="submit"] {
+        width: 50%;
+        cursor: pointer;
+        margin: auto;
+        transition: all 0.4s;
+        margin: auto;
+
+        &:hover {
+          transform: translateY(-5px);
+          color: $violet;
+          background-color: $darkBlue;
+        }
+      }
+    }
+  }
+
+  > .loginRegisterContainer {
+    z-index: 2;
+    // visibility: hidden;
+    // opacity: 0;
+    // transform: translateY(-10px);
+    @include flex(row, center, flex-start, 0);
+    // background-color: $darkest;
+    background: rgba(38, 41, 58, 0.8);
+    background-blend-mode: darken;
+    backdrop-filter: blur(5px);
+    height: 70vh;
+    width: calc(15rem + 10vw);
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+    transition: all 0.8s;
+
+    > div:first-child {
+      @include flex(row, space-around, center, 0);
+      // background-color: $Grey;
+      height: 10vh;
+      width: calc(10rem + 10vw);
+      position: relative;
+
+      > button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: $violet;
+        @include sansa();
+        transition: all 0.4s;
+
+        &:hover {
+          color: white;
+        }
+      }
+      > div {
+        height: 5px;
+        width: calc(5rem + 5vw);
+        background-color: rgb(255, 85, 85);
+        position: absolute;
+        bottom: 0;
+        transition: all 0.8s;
+      }
+    }
+
+    > div:nth-child(2) {
+      @include flex(row, center, flex-end, 0);
+      top: 10vh;
+      position: absolute;
+      height: 60vh;
+      // background-color: $Grey;
+      transition: all 0.8s;
+
+      > div {
         @include flex(column);
+        padding: 2rem;
+        width: calc(15rem + 10vw);
+
+        > form {
+          @include flex(column, start, start);
+          width: 100%;
+          > a {
+            @include btn(transparent);
+            color: $violet;
+            padding: 0;
+          }
+
+          > input {
+            padding: 0.5rem;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            @include sansa();
+          }
+          > input[type="submit"] {
+            width: 50%;
+            cursor: pointer;
+            margin: auto;
+            transition: all 0.4s;
+            &:hover {
+              transform: translateY(-5px);
+              color: $violet;
+              background-color: $darkBlue;
+            }
+          }
+        }
+
+        > div {
+          font-size: 10rem;
+          color: $Grey;
+          border: 5px solid rgb(45, 217, 218);
+          // background-color: $darkBlue;
+          > svg {
+            border-radius: 50%;
+          }
+          > .userAdd {
+            transform: translateX(10px);
+          }
+        }
+      }
     }
   }
 }

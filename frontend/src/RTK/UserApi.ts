@@ -43,6 +43,25 @@ export const userApi = createApi({
         method: "GET",
       }),
     }),
+
+    forgotPasssword: builder.mutation({
+      query: (email) => ({
+        url: "/password/forgot",
+        method: "POST",
+        body: email,
+      }),
+    }),
+
+    resetPassword: builder.mutation({
+      query: (info) => ({
+        url: `/password/reset/${info.token}`,
+        method: "PUT",
+        body: {
+          password: info.password,
+          confirmPassword: info.confirmPassword,
+        },
+      }),
+    }),
   }),
 });
 
@@ -52,4 +71,6 @@ export const {
   useLogoutUserMutation,
   useGetUserMutation,
   useGetCookieMutation,
+  useForgotPassswordMutation,
+  useResetPasswordMutation,
 } = userApi;

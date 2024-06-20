@@ -36,7 +36,7 @@ exports.fetchUser = async (req: Request, res: Response, next: NextFunction) => {
       return resError(401, "Unauthorized", res);
     }
 
-    req.user = user;
+    req.user = user; // typescript error
     next();
   } catch (error) {
     return resError(401, "Unauthorized", res);

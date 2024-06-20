@@ -6,54 +6,8 @@
 
   .footLeft {
     > div {
-        margin: auto;
-        text-align: center;
-    }
-    > .vitLogo {
-      height: 200px;
-      width: 200px;
-      background-color: $darkest;
-      border-radius: 100%;
-      font-size: 4rem;
-      text-align: center;
-      @include flex();
-      z-index: 2;
       margin: auto;
-
-      .Vbig {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        color: white;
-        font-size: 6rem;
-        font-style: italic;
-        padding-bottom: 2px;
-      }
-
-      .Xbig {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        color: red;
-        font-size: 7rem;
-        font-style: italic;
-      }
-    }
-    .logoTxt {
-      font-family: monospace;
-      font-size: 1.3rem;
-      color: white;
-    }
-
-    .V {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      /* color: red; */
-      font-size: 1.3rem;
-      font-style: italic;
-      padding-bottom: 2px;
-    }
-
-    .X {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: red;
-      font-size: 1.6rem;
-      font-style: italic;
+      text-align: center;
     }
   }
 
@@ -61,7 +15,6 @@
     @include flex(row, space-between, start, 3vw);
 
     > div {
-
       > h1 {
         color: rgb(255, 84, 84);
         font-size: 1.2rem;
@@ -85,7 +38,6 @@
   }
 
   .footRight {
-
     > h1 {
       font-size: 1.1rem;
       color: rgb(255, 84, 84);

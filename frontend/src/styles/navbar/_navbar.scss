@@ -78,6 +78,27 @@
   }
 }
 
+.udlLeftLight {
+  position: relative;
+  color: $violet;
+  margin: 5px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: $violet;
+    transition: all 0.3s;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
 .udlCenter {
   position: relative;
   display: inline-block;
@@ -213,7 +234,7 @@
           color: black;
         }
         > button {
-          padding: .5rem 1rem;
+          padding: 1rem;
           border-radius: 1rem;
           // width: 8rem;
           border: none;

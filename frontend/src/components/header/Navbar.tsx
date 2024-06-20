@@ -32,6 +32,7 @@ const Navbar = ({user}: navProps) => {
       }
       if (result.data.success === true) {
         toast.success(result.data.message);
+        location.reload();
       }
     } catch (error) {
       toast.error(String(error));
@@ -202,7 +203,7 @@ const Navbar = ({user}: navProps) => {
             </div>
           </>
         ) : (
-          <Link to={"/login"} className="login">
+          <Link to={"/account"} className="login">
             <FiLogIn className="loginIcon" />
             <span className="loginTxt">Sign in</span>
           </Link>

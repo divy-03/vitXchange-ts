@@ -17,11 +17,12 @@ const Admin = lazy(() => import("./admin/Admin"));
 const Home = lazy(() => import("./pages/Home"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const Login = lazy(() => import("./pages/Login"));
-const Register = lazy(() => import("./pages/SignUp"));
+const Reset = lazy(() => import("./pages/Reset"));
 
 const App = () => {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const navVisible = location.pathname.startsWith("/admin");
+  // ||  location.pathname.startsWith("/account");
   const [getUser] = useGetUserMutation();
 
   interface User {
@@ -45,8 +46,7 @@ const App = () => {
       .then((result) => {
         setUser(result.data.user);
       })
-      .catch((error) => {
-        console.log("Error fetching the token:", error);
+      .catch(() => {
         setUser({
           _id: "",
           email: "",
@@ -56,14 +56,14 @@ const App = () => {
         });
       });
     getUser;
-  }, [user]);
+  }, [location.pathname]);
 
   return (
     <Suspense fallback={<Loader />}>
-      {!isAdminRoute && <Navbar user={user} />}
+      {!navVisible && <Navbar user={user} />}
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/account" element={<Login />} />
+        <Route path="/reset/:token" element={<Reset />} />
         <Route>
           <Route path="/shipping" element={<Shipping />} />
         </Route>
@@ -84,7 +84,7 @@ const App = () => {
           theme="dark"
         />
       </div>
-      {!isAdminRoute && <Footer />}
+      {!navVisible && <Footer />}
     </Suspense>
   );
 };
