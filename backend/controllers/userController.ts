@@ -83,15 +83,17 @@ exports.getCookieToken = catchAsyncError(
   }
 );
 
-exports.getUser = catchAsyncError(async (req: Request, res: Response) => {
-  const filter = req.user ? { _id: req.user._id } : {}; // Filter by ID if available
-  const user = await User.findOne(filter);
+exports.getUserProfile = catchAsyncError(
+  async (req: Request, res: Response) => {
+    const filter = req.user ? { _id: req.user._id } : {}; // Filter by ID if available
+    const user = await User.findOne(filter);
 
-  return res.status(200).json({
-    success: true,
-    user,
-  });
-});
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  }
+);
 
 exports.forgotPassword = catchAsyncError(
   async (req: Request, res: Response) => {
@@ -206,5 +208,73 @@ exports.updateProfile = catchAsyncError(async (req: Request, res: Response) => {
 
   // TODO: avatar image
 
-  await User.findByIdAndUpdate(req.user?._id);
+  await User.findByIdAndUpdate(req.user?._id, newUserData, {
+    new: true,
+    runValidators: true,
+  });
+
+  resSuccess(200, "Profile updated successfully", res);
+});
+
+exports.getAllUsers = catchAsyncError(async (req: Request, res: Response) => {
+  const users = await User.find({});
+
+  return res.status(200).json({
+    success: true,
+    usersCount: users.length,
+    users,
+  });
+});
+
+exports.getUser = catchAsyncError(async (req: Request, res: Response) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return resError(404, "User not found", res);
+  }
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+exports.editUserRole = catchAsyncError(async (req: Request, res: Response) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  };
+
+  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+    new: true,
+    runValidators: true,
+    userModifyAndModify: false,
+  });
+
+  if (!user) {
+    return resError(404, "User not found", res);
+  }
+
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+exports.deleteUser = catchAsyncError(async (req: Request, res: Response) => {
+  const user = await User.findById(req.params.id);
+
+  // TODO: remove cloudinary later
+
+  if (user === null) {
+    return resError(404, "User not found", res);
+  }
+
+  if (user.role == "owner") {
+    return resError(400, "You can't delete Owner", res);
+  }
+
+  await User.deleteOne();
+
+  return resSuccess(200, "User deleted successfully", res);
 });

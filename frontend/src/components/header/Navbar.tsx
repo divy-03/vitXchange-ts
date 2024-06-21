@@ -184,9 +184,9 @@ const Navbar = ({ user }: navProps) => {
               <Cart cartActive={cartActive} setCartActive={setCartActive} />
             </div>
             <div className="container">
-              <button>
+              <Link to={"/me"}>
                 <FaUser />
-              </button>
+              </Link>
               <div className="dropUser">
                 {user.role === "admin" && (
                   <Link to={"/admin/dashboard"} className="udlLeft">

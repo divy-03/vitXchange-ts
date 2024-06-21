@@ -30,10 +30,21 @@ export const userApi = createApi({
       }),
     }),
 
-    getUser: builder.mutation({
+    getUserProfile: builder.mutation({
       query: () => ({
         url: "/auth/me",
         method: "GET",
+      }),
+    }),
+
+    updateProfile: builder.mutation({
+      query: ({ name, email }) => ({
+        url: "/auth/update",
+        method: "PUT",
+        body: {
+          name,
+          email,
+        },
       }),
     }),
 
@@ -62,6 +73,51 @@ export const userApi = createApi({
         },
       }),
     }),
+
+    updatePassword: builder.mutation({
+      query: ({ oldPassword, newPassword, confirmPassword }) => ({
+        url: "/password/update",
+        method: "PUT",
+        body: {
+          oldPassword,
+          newPassword,
+          confirmPassword,
+        },
+      }),
+    }),
+
+    getAllUsers: builder.mutation({
+      query: () => ({
+        url: "/admin/users",
+        method: "GET",
+      }),
+    }),
+
+    getUser: builder.mutation({
+      query: (id) => ({
+        url: `/admin/user/${id}`,
+        method: "GET",
+      }),
+    }),
+
+    editUserRole: builder.mutation({
+      query: ({ id, name, email, role }) => ({
+        url: `/admin/user/${id}`,
+        method: "PUT",
+        body: {
+          name,
+          email,
+          role,
+        },
+      }),
+    }),
+
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/admin/user/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -69,8 +125,14 @@ export const {
   useAddUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
-  useGetUserMutation,
+  useGetUserProfileMutation,
+  useUpdateProfileMutation,
   useGetCookieMutation,
   useForgotPassswordMutation,
   useResetPasswordMutation,
+  useUpdatePasswordMutation,
+  useGetAllUsersMutation,
+  useGetUserMutation,
+  useEditUserRoleMutation,
+  useDeleteUserMutation,
 } = userApi;

@@ -274,8 +274,8 @@
           }
         }
       }
-      > button {
-        @include square(3rem);
+      > a {
+        padding: 1rem 1.2rem;
         border-radius: 50%;
         border: none;
         background-color: $lightGrey;

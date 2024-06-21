@@ -11,19 +11,22 @@ import Navbar from "./components/header/Navbar";
 import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useGetUserMutation } from "./RTK/UserApi";
+import { useGetUserProfileMutation } from "./RTK/UserApi";
 
 const Admin = lazy(() => import("./admin/Admin"));
 const Home = lazy(() => import("./pages/Home"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const Login = lazy(() => import("./pages/Login"));
 const Reset = lazy(() => import("./pages/Reset"));
+const UserProfile = lazy(() => import("./pages/UserProfile"));
 
 const App = () => {
   const location = useLocation();
-  const navVisible = location.pathname.startsWith("/admin");
-  // ||  location.pathname.startsWith("/account");
-  const [getUser] = useGetUserMutation();
+  const navVisible =
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/account") ||
+    location.pathname.startsWith("/me");
+  const [getUserProfile] = useGetUserProfileMutation();
 
   interface User {
     _id: string;
@@ -42,7 +45,7 @@ const App = () => {
   });
 
   useEffect(() => {
-    getUser({})
+    getUserProfile({})
       .then((result) => {
         setUser(result.data.user);
       })
@@ -55,7 +58,7 @@ const App = () => {
           __v: 0,
         });
       });
-    getUser;
+    getUserProfile;
   }, [location.pathname]);
 
   return (
@@ -66,6 +69,7 @@ const App = () => {
         <Route path="/reset/:token" element={<Reset />} />
         <Route>
           <Route path="/shipping" element={<Shipping />} />
+          <Route path="/me" element={<UserProfile user={user} />} />
         </Route>
         {user.role === "admin" && <Route path="/admin/*" element={<Admin />} />}
         <Route path="/" element={<Home />} />
