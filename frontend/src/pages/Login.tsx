@@ -4,13 +4,11 @@ import {
   useForgotPassswordMutation,
   useLoginUserMutation,
 } from "../RTK/UserApi";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { TiUserAddOutline, TiUserOutline } from "react-icons/ti";
 import Loader from "../components/Loader";
 import { MdOutlineLockReset } from "react-icons/md";
-// import Cookies from "js-cookie";
 
 // Define the structure of the user data
 interface User {
@@ -18,16 +16,6 @@ interface User {
   email: string;
   password: string;
 }
-
-// Define the expected error structure
-interface FetchErrorData {
-  error: string;
-}
-
-// Type guard to check if the data is of type FetchErrorData
-const isFetchErrorData = (data: unknown): data is FetchErrorData => {
-  return (data as FetchErrorData).error !== undefined;
-};
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,15 +29,13 @@ const Login = () => {
   const loginSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await loginUser({ email, password });
-    if (result.error) {
-      const fetchError = result.error as FetchBaseQueryError;
-      if (fetchError.data as { error: string })
-        return toast.error((fetchError.data as { error: string }).error);
+
+    if (!result.data.success) {
+      return toast.error(result.data.error);
     }
-    if (result.data.success === true) {
-      toast.success(`Loged In ${result.data.user.name} successfully`);
-      navigate("/");
-    }
+
+    toast.success(`Loged In ${result.data.user.name} successfully`);
+    navigate("/");
   };
 
   const [user, setUser] = useState<User>({
@@ -68,19 +54,12 @@ const Login = () => {
     e.preventDefault();
     const result = await addUser(user);
 
-    if ("error" in result) {
-      const fetchError = result.error as FetchBaseQueryError;
-      if (fetchError.data && isFetchErrorData(fetchError.data)) {
-        return toast.error(fetchError.data.error);
-      } else {
-        return toast.error("An unexpected error occurred.");
-      }
+    if (!result.data.success) {
+      return toast.error(result.data.error);
     }
 
-    if (result.data.success) {
-      toast.success(`Registered ${user.name} successfully`);
-      navigate("/");
-    }
+    toast.success(`Registered ${user.name} successfully`);
+    navigate("/");
   };
 
   const [forgotPassword, { isLoading: isFl }] = useForgotPassswordMutation();
@@ -89,18 +68,10 @@ const Login = () => {
     e.preventDefault();
     const result = await forgotPassword({ email });
 
-    if ("error" in result) {
-      const fetchError = result.error as FetchBaseQueryError;
-      if (fetchError.data && isFetchErrorData(fetchError.data)) {
-        toast.error(fetchError.data.error);
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+    if (!result.data.success) {
+      return toast.error(result.data.error);
     }
-
-    if (result.data.success) {
-      toast.success(result.data.message);
-    }
+    toast.success(result.data.message);
   };
 
   if (isFl || isLl || isRl) {

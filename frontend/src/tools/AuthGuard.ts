@@ -10,11 +10,11 @@ const useAuthGuard = () => {
     getCookie({})
       .then((result) => {
         if (!result.data.message) {
-          navigate("/login");
+          navigate("/account");
         }
       })
       .catch(() => {
-        navigate("/login");
+        navigate("/account");
       });
   }, [getCookie, history]);
 };

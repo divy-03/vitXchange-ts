@@ -126,7 +126,7 @@
       background-color: white;
       padding: 0 3rem 3rem 0;
 
-      div {
+      > div {
         @include flex(row, center, center, 3.2%);
         height: 100%;
         width: 100%;
@@ -136,19 +136,434 @@
         //   inset -6px -6px 10px rgba(94, 104, 121, 0.3);
 
         > div {
-            height: 90%;
-            width: 45%;
+          height: 90%;
+          width: 45%;
+          @include flex(column, center, center, 0);
+          border-radius: 2rem;
+
+          &:first-of-type {
             background-color: white;
-
-            &:first-of-type {
-
-                > div {
-                    background-color: $darkest;
-                    color: $violet;
-                    height: 40%;
-                    width: 40%;
-                }
+            > .userImg {
+              @include flex();
+              background-color: $darkViolet;
+              color: $violet;
+              height: 40%;
+              width: 80%;
+              font-size: 8rem;
+              border-radius: 2rem;
             }
+            > div {
+              @include flex(column, center, center, 2rem);
+              height: 50%;
+
+              > div {
+                @include flex();
+
+                .meContainer {
+                  height: 100dvh;
+
+                  > nav {
+                    height: 7rem;
+                    background-color: white;
+                    @include flex(row, flex-start);
+
+                    > div:first-of-type {
+                      @include flex(row, center, center, 0rem);
+                      background-color: $violet;
+                      border-radius: 50px;
+                      width: 15%;
+                      padding: 1rem 0rem;
+                      margin: 0 2.5%;
+
+                      > .logo {
+                        height: 40px;
+                        width: 40px;
+                        background-color: black;
+                        outline: 2px solid red;
+                        border-top: 2px solid white;
+                        border-bottom: 2px solid white;
+                        border-radius: 50%;
+                        box-shadow: 0px 0px 12px white;
+                        display: flex;
+                        margin: 0 0.3rem 0 0.3rem;
+                        justify-content: center;
+                        align-items: center;
+                        transition: all 0.4s;
+
+                        &:first-child {
+                          color: white;
+                        }
+                      }
+
+                      .logo:hover {
+                        cursor: pointer;
+                        box-shadow: 0px 0px 22px white;
+                      }
+
+                      > .logoTxt {
+                        color: black;
+                      }
+                    }
+                    > div:nth-of-type(2) {
+                      width: 80%;
+                      @include flex(row, space-between, center);
+
+                      > h2 {
+                        @include sansa();
+                        font-size: 2rem;
+                      }
+                      > div {
+                        background-color: $violet;
+                        border-radius: 50px;
+                        padding: 1rem 1.2rem;
+                        margin-right: 3rem;
+                        z-index: 4000;
+                        cursor: pointer;
+
+                        > div {
+                          top: 6rem;
+                          margin-right: 1.4rem;
+
+                          > a {
+                            color: black;
+                          }
+                          > button {
+                            padding: 1rem;
+                            border-radius: 1rem;
+                            // width: 8rem;
+                            border: none;
+                            background-color: $darkBlue;
+                            color: white;
+                            @include flex(row, center, center, 0);
+                            cursor: pointer;
+                            position: relative;
+                            overflow: hidden;
+                            text-align: center;
+                            transition: all 0.3s ease;
+
+                            &:hover {
+                              background-color: $lightBlue;
+                              padding-right: 1rem;
+                            }
+
+                            &:hover .signOutIcon {
+                              width: 0;
+                            }
+                            &:hover .signOutTxt {
+                              opacity: 1;
+                              width: 3.5rem;
+                              transform: translateX(0);
+                            }
+                            > svg {
+                              transition: all 0.3s ease;
+                            }
+                            > span {
+                              text-align: center;
+                              opacity: 0;
+                              width: 0;
+                              white-space: nowrap;
+                              margin-left: 0;
+                              transform: translateX(-1rem);
+                              transition: all 0.3s ease;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  > div {
+                    @include flex(row, center, center, 0);
+
+                    > aside {
+                      height: calc(100dvh - 7rem);
+                      background-color: white;
+                      width: 20%;
+                      @include flex(column, start, center);
+                    }
+                    > div {
+                      width: 80%;
+                      height: calc(100dvh - 7rem);
+                      background-color: white;
+                      padding: 0 3rem 3rem 0;
+
+                      > div {
+                        @include flex(row, center, center, 3.2%);
+                        height: 100%;
+                        width: 100%;
+                        background-color: $violet;
+                        border-radius: 2rem;
+                        // box-shadow: inset -6px -6px 10px rgba(255, 255, 255, 0.45),
+                        //   inset -6px -6px 10px rgba(94, 104, 121, 0.3);
+
+                        > div {
+                          height: 90%;
+                          width: 45%;
+                          @include flex(column, center, center, 0);
+                          border-radius: 2rem;
+
+                          &:first-of-type {
+                            background-color: white;
+                            > .userImg {
+                              @include flex();
+                              background-color: $darkViolet;
+                              color: $violet;
+                              height: 40%;
+                              width: 80%;
+                              font-size: 8rem;
+                              border-radius: 2rem;
+                            }
+                            > div {
+                              @include flex(column, center, center, 2rem);
+                              height: 50%;
+
+                              > div {
+                                @include flex();
+
+                                > span {
+                                  font-size: 1.1rem;
+                                  font-weight: 500;
+                                }
+
+                                > em {
+                                  padding: 1rem;
+                                  width: 100%;
+                                  border: none;
+                                  border-bottom: 2px solid;
+                                  @include sansa();
+                                  font-size: 1.1rem;
+                                  transition: all 0.4s;
+
+                                  &:focus {
+                                    outline: none;
+                                    background-color: $violet;
+                                  }
+                                }
+                              }
+                              > div {
+                                > button {
+                                  @include flex();
+                                  border: none;
+                                  cursor: pointer;
+                                  padding: 1rem;
+                                  width: auto;
+                                  @include sansa();
+                                  border-radius: 1rem;
+                                  font-size: 1.2rem;
+                                  transition: all 0.4s;
+
+                                  &:hover {
+                                    transform: translateY(5px);
+                                    background-color: rgb(255, 85, 85);
+                                  }
+                                }
+                                > .dialogBox {
+                                  display: none;
+                                }
+
+                                dialog::backdrop {
+                                  background-color: rgba(43, 36, 55, 0.5);
+                                }
+
+                                dialog[open] {
+                                  @include flex(column);
+                                  top: 50%;
+                                  left: 50%;
+                                  transform: translate(-50%, -50%);
+                                  padding: 3rem;
+                                  border: none;
+                                  border-radius: 2rem;
+
+                                  > h2 {
+                                    @include sansa();
+                                    font-size: 2rem;
+                                  }
+
+                                  > form {
+                                    @include flex(column);
+
+                                    > input {
+                                      padding: 1rem 2rem;
+                                      width: 100%;
+                                      @include sansa();
+                                      font-size: 1.1rem;
+                                      border: none;
+                                      background-color: $violet;
+
+                                      &:focus {
+                                        outline: 1px solid $darkViolet;
+                                      }
+                                    }
+
+                                    > input[type="submit"] {
+                                      @include flex();
+                                      border: none;
+                                      cursor: pointer;
+                                      padding: 1rem;
+                                      width: auto;
+                                      @include sansa();
+                                      border-radius: 1rem;
+                                      color: $violet;
+                                      font-size: 1.2rem;
+                                      background-color: rgb(255, 85, 85);
+                                      transition: all 0.4s;
+
+                                      &:hover {
+                                        transform: translateY(5px);
+                                        background-color: $darkViolet;
+                                      }
+                                    }
+                                  }
+                                }
+
+                                .dialogBox > form {
+                                  display: flex;
+                                  flex-direction: column;
+                                  align-items: center;
+                                  justify-content: center;
+                                  gap: 2rem;
+                                }
+                              }
+                            }
+                          }
+                          &:nth-of-type(2) {
+                            @include flex(column, space-between, center, 2rem);
+                            > div {
+                              @include flex(column);
+                              width: 100%;
+                              height: calc(50% - 1rem);
+                              border-radius: 2rem;
+                              background-color: white;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                > label {
+                  font-size: 1.1rem;
+                  font-weight: 500;
+                }
+
+                > input {
+                  padding: 1rem 2rem;
+                  border: none;
+                  border-bottom: 2px solid $darkViolet;
+                  @include sansa();
+                  font-size: 1.1rem;
+                  transition: all 0.4s;
+
+                  &:focus {
+                    outline: none;
+                    background-color: $violet;
+                  }
+                }
+              }
+              > div {
+                > button {
+                  @include flex();
+                  border: none;
+                  cursor: pointer;
+                  padding: 1rem;
+                  width: auto;
+                  @include sansa();
+                  border-radius: 1rem;
+                  font-size: 1.2rem;
+                  transition: all 0.4s;
+                  color: $violet;
+                  background-color: $darkestViolet;
+                  &:first-of-type {
+                    background-color: $violet;
+                    color: $darkestViolet;
+                  }
+
+                  &:hover {
+                    transform: translateY(5px);
+                    background-color: rgb(255, 85, 85);
+                    color: $violet;
+                  }
+                }
+                > .dialogBox {
+                  display: none;
+                }
+
+                dialog::backdrop {
+                  background-color: rgba(43, 36, 55, 0.5);
+                }
+
+                dialog[open] {
+                  @include flex(column);
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  padding: 3rem;
+                  border: none;
+                  border-radius: 2rem;
+
+                  > h2 {
+                    @include sansa();
+                    font-size: 2rem;
+                  }
+
+                  > form {
+                    @include flex(column);
+
+                    > input {
+                      padding: 1rem 2rem;
+                      width: 100%;
+                      @include sansa();
+                      font-size: 1.1rem;
+                      border: none;
+                      background-color: $violet;
+                      border-bottom: 2px solid $darkestViolet;
+
+                      &:focus {
+                        outline: 1px solid $darkViolet;
+                      }
+                    }
+
+                    > input[type="submit"] {
+                      @include flex();
+                      border: none;
+                      cursor: pointer;
+                      padding: 1rem;
+                      width: auto;
+                      @include sansa();
+                      border-radius: 1rem;
+                      color: $violet;
+                      font-size: 1.2rem;
+                      background-color: rgb(255, 85, 85);
+                      transition: all 0.4s;
+
+                      &:hover {
+                        transform: translateY(5px);
+                        background-color: $darkViolet;
+                      }
+                    }
+                  }
+                }
+
+                .dialogBox > form {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 2rem;
+                }
+              }
+            }
+          }
+          &:nth-of-type(2) {
+            @include flex(column, space-between, center, 2rem);
+            > div {
+              @include flex(column);
+              width: 100%;
+              height: calc(50% - 1rem);
+              border-radius: 2rem;
+              background-color: white;
+            }
+          }
         }
       }
     }

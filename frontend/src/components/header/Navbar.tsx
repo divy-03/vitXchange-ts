@@ -4,7 +4,6 @@ import Cart from "./Cart";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useLogoutUserMutation } from "../../RTK/UserApi";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { FiLogIn } from "react-icons/fi";
 
 type navProps = {
@@ -24,17 +23,13 @@ const Navbar = ({ user }: navProps) => {
   const handleLogOut = async () => {
     try {
       const result = await logoutUser({});
-      if (result.error) {
-        const fetchError = result.error as FetchBaseQueryError;
-        if (fetchError.data as { error: string })
-          return toast.error((fetchError.data as { error: string }).error);
+      if (result.data.success === false) {
+        return toast.error(result.data.error);
       }
-      if (result.data.success === true) {
-        toast.success(result.data.message);
-        setTimeout(() => {
-          location.reload();
-        }, 2000);
-      }
+      toast.success(result.data.message);
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     } catch (error) {
       toast.error(String(error));
     }
@@ -188,7 +183,7 @@ const Navbar = ({ user }: navProps) => {
                 <FaUser />
               </Link>
               <div className="dropUser">
-                {user.role === "admin" && (
+                {(user.role === "admin" || user.role === "owner")  && (
                   <Link to={"/admin/dashboard"} className="udlLeft">
                     Dashboard
                   </Link>
