@@ -196,7 +196,7 @@ exports.updatePassword = catchAsyncError(
 
     await user?.save();
 
-    if (user) return sendToken(user.toObject(), 200, res);
+    if (user) return resSuccess(200, "Password Changed Successfully", res);
   }
 );
 

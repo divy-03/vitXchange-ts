@@ -8,6 +8,7 @@ import {
 } from "../RTK/UserApi";
 import useAuthGuard from "../tools/AuthGuard";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 type navProps = {
   user: {
@@ -102,6 +103,7 @@ const UserProfile = ({ user }: navProps) => {
         return toast.error(result.data.error);
       }
       toast.success(result.data.message);
+      proBox.close();
     } catch (error) {
       toast.error(String(error));
     }
@@ -134,15 +136,16 @@ const UserProfile = ({ user }: navProps) => {
 
   const handleChangePassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Called");
     try {
       const result = await updatePassword(pswrd);
-      console.log(result);
 
-      if (!result.data.success) {
-        return toast.error(result.data.error);
+      if (result.error) {
+        const fetchError = result.error as FetchBaseQueryError;
+        if (fetchError.data as { error: string })
+          return toast.error((fetchError.data as { error: string }).error);
       }
       toast.success(result.data.message);
+      pswrdBox.close();
     } catch (error) {
       toast.error(String(error));
     }

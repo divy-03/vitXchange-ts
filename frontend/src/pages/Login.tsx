@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { TiUserAddOutline, TiUserOutline } from "react-icons/ti";
 import Loader from "../components/Loader";
 import { MdOutlineLockReset } from "react-icons/md";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 // Define the structure of the user data
 interface User {
@@ -30,10 +31,11 @@ const Login = () => {
     e.preventDefault();
     const result = await loginUser({ email, password });
 
-    if (!result.data.success) {
-      return toast.error(result.data.error);
+    if (result.error) {
+      const fetchError = result.error as FetchBaseQueryError;
+      if (fetchError.data as { error: string })
+        return toast.error((fetchError.data as { error: string }).error);
     }
-
     toast.success(`Loged In ${result.data.user.name} successfully`);
     navigate("/");
   };
@@ -54,8 +56,10 @@ const Login = () => {
     e.preventDefault();
     const result = await addUser(user);
 
-    if (!result.data.success) {
-      return toast.error(result.data.error);
+    if (result.error) {
+      const fetchError = result.error as FetchBaseQueryError;
+      if (fetchError.data as { error: string })
+        return toast.error((fetchError.data as { error: string }).error);
     }
 
     toast.success(`Registered ${user.name} successfully`);
@@ -68,8 +72,10 @@ const Login = () => {
     e.preventDefault();
     const result = await forgotPassword({ email });
 
-    if (!result.data.success) {
-      return toast.error(result.data.error);
+    if (result.error) {
+      const fetchError = result.error as FetchBaseQueryError;
+      if (fetchError.data as { error: string })
+        return toast.error((fetchError.data as { error: string }).error);
     }
     toast.success(result.data.message);
   };
