@@ -5,8 +5,8 @@ import crypto from "crypto";
 export interface IUser extends Document {
   name: string;
   email: string;
+  role: "user" | "admin" | "owner";
   password: string;
-  role: string;
   resetPasswordToken?: string | undefined;
   resetPasswordExpire?: Date | undefined;
   getResetPasswordToken(): string;

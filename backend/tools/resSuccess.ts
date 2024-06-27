@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { ValidationError } from "express-validator";
 
-const resError = (
+const resSuccess = (
   statusCode: number,
   message: string | ValidationError[],
   res: Response
@@ -12,4 +12,4 @@ const resError = (
   });
 };
 
-export default resError;
+export default resSuccess;

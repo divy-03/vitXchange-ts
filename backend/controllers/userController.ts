@@ -2,7 +2,14 @@ import { Request, Response } from "express";
 import User from "../models/userModel";
 import sendToken from "../utils/sendToken";
 import { Document } from "mongoose";
-import { NewUserRequestBody } from "../types/types";
+import {
+  LoginUserRequestBody,
+  MessageRespondBody,
+  NewUserRequestBody,
+  ResetPasswordRequestBody,
+  UpdatePasswordRequestBody,
+  UpdateProfileRequestBody,
+} from "../types/types";
 const bcrypt = require("bcryptjs");
 import sendEmail from "../utils/sendEmail";
 import { check, validationResult } from "express-validator";
@@ -40,41 +47,45 @@ exports.registerUser = catchAsyncError(
   }
 );
 
-exports.loginUser = catchAsyncError(async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  await check("email", "Please enter a valid email").isEmail().run(req);
-  await check("password", "Please enter a password").notEmpty().run(req);
+exports.loginUser = catchAsyncError(
+  async (req: Request<{}, {}, LoginUserRequestBody>, res: Response) => {
+    const { email, password } = req.body;
+    await check("email", "Please enter a valid email").isEmail().run(req);
+    await check("password", "Please enter a password").notEmpty().run(req);
 
-  const errors = validationResult(req);
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    return resError(400, errors.array(), res);
-  } else {
-    const userDoc = await User.findOne({ email }).select("+password");
-
-    if (!userDoc) {
-      return resError(401, "Invalid email or password", res);
-    }
-    const savedPassword = userDoc.password;
-    const passwordCompare = await bcrypt.compareSync(password, savedPassword);
-
-    if (!passwordCompare) {
-      return resError(401, "Password not matched", res);
+    if (!errors.isEmpty()) {
+      return resError(400, errors.array(), res);
     } else {
-      const user = mapUserDocumentToUser(userDoc);
-      return sendToken(user, 200, res);
+      const userDoc = await User.findOne({ email }).select("+password");
+
+      if (!userDoc) {
+        return resError(401, "Invalid email or password", res);
+      }
+      const savedPassword = userDoc.password;
+      const passwordCompare = await bcrypt.compareSync(password, savedPassword);
+
+      if (!passwordCompare) {
+        return resError(401, "Password not matched", res);
+      } else {
+        const user = mapUserDocumentToUser(userDoc);
+        return sendToken(user, 200, res);
+      }
     }
   }
-});
+);
 
-exports.logOutUser = catchAsyncError(async (req: Request, res: Response) => {
-  res.cookie("xToken", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-  });
+exports.logOutUser = catchAsyncError(
+  async (req: Request, res: Response<MessageRespondBody>) => {
+    res.cookie("xToken", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
 
-  resSuccess(200, "Logged out Successfully", res);
-});
+    resSuccess(200, "Logged out Successfully", res);
+  }
+);
 
 exports.getCookieToken = catchAsyncError(
   async (req: Request, res: Response) => {
@@ -85,8 +96,11 @@ exports.getCookieToken = catchAsyncError(
 
 exports.getUserProfile = catchAsyncError(
   async (req: Request, res: Response) => {
-    const filter = req.user ? { _id: req.user._id } : {}; // Filter by ID if available
+    const filter = req.user ? { _id: req.user._id } : {};
+    if (!filter) return resError(401, "Unauthorized", res);
+
     const user = await User.findOne(filter);
+    if (!user) return resError(404, "User not found", res);
 
     return res.status(200).json({
       success: true,
@@ -96,7 +110,7 @@ exports.getUserProfile = catchAsyncError(
 );
 
 exports.forgotPassword = catchAsyncError(
-  async (req: Request, res: Response) => {
+  async (req: Request<{}, {}, { email: string }>, res: Response) => {
     const { email } = req.body;
 
     const user = await User.findOne({ email });
@@ -139,39 +153,44 @@ exports.forgotPassword = catchAsyncError(
   }
 );
 
-exports.resetPassword = catchAsyncError(async (req: Request, res: Response) => {
-  const resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(req.params.token)
-    .digest("hex");
+exports.resetPassword = catchAsyncError(
+  async (
+    req: Request<{ token: string }, {}, ResetPasswordRequestBody>,
+    res: Response
+  ) => {
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
 
-  const user = await User.findOne({
-    resetPasswordToken,
-    resetPasswordExpire: { $gt: Date.now() },
-  });
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
 
-  if (!user) {
-    return resError(400, "Reset password link is invalid or expired", res);
+    if (!user) {
+      return resError(400, "Reset password link is invalid or expired", res);
+    }
+    if (req.body.password !== req.body.confirmPassword) {
+      return resError(400, "Password doesn't match", res);
+    }
+
+    const salt = await bcrypt.genSaltSync(10);
+    const secPass = await bcrypt.hashSync(req.body.password, salt);
+
+    user.password = secPass;
+
+    user.resetPasswordExpire = undefined;
+    user.resetPasswordToken = undefined;
+
+    await user.save();
+    const userObj = mapUserDocumentToUser(user);
+    sendToken(userObj, 200, res);
   }
-  if (req.body.password !== req.body.confirmPassword) {
-    return resError(400, "Password doesn't match", res);
-  }
-
-  const salt = await bcrypt.genSaltSync(10);
-  const secPass = await bcrypt.hashSync(req.body.password, salt);
-
-  user.password = secPass;
-
-  user.resetPasswordExpire = undefined;
-  user.resetPasswordToken = undefined;
-
-  await user.save();
-  const userObj = mapUserDocumentToUser(user);
-  sendToken(userObj, 200, res);
-});
+);
 
 exports.updatePassword = catchAsyncError(
-  async (req: Request, res: Response) => {
+  async (req: Request<{}, {}, UpdatePasswordRequestBody>, res: Response<MessageRespondBody>) => {
     const user = await User.findById(req.user?._id).select("+password");
 
     const passswordCompare = await bcrypt.compareSync(
@@ -200,21 +219,23 @@ exports.updatePassword = catchAsyncError(
   }
 );
 
-exports.updateProfile = catchAsyncError(async (req: Request, res: Response) => {
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-  };
+exports.updateProfile = catchAsyncError(
+  async (req: Request<{}, {}, UpdateProfileRequestBody>, res: Response<MessageRespondBody>) => {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+    };
 
-  // TODO: avatar image
+    // TODO: avatar image
 
-  await User.findByIdAndUpdate(req.user?._id, newUserData, {
-    new: true,
-    runValidators: true,
-  });
+    await User.findByIdAndUpdate(req.user?._id, newUserData, {
+      new: true,
+      runValidators: true,
+    });
 
-  resSuccess(200, "Profile updated successfully", res);
-});
+    resSuccess(200, "Profile updated successfully", res);
+  }
+);
 
 exports.getAllUsers = catchAsyncError(async (req: Request, res: Response) => {
   const users = await User.find({});
@@ -226,55 +247,67 @@ exports.getAllUsers = catchAsyncError(async (req: Request, res: Response) => {
   });
 });
 
-exports.getUser = catchAsyncError(async (req: Request, res: Response) => {
-  const user = await User.findById(req.params.id);
+exports.getUser = catchAsyncError(
+  async (req: Request<{ id: string }>, res: Response) => {
+    const user = await User.findById(req.params.id);
 
-  if (!user) {
-    return resError(404, "User not found", res);
+    if (!user) {
+      return resError(404, "User not found", res);
+    }
+    return res.status(200).json({
+      success: true,
+      user,
+    });
   }
-  return res.status(200).json({
-    success: true,
-    user,
-  });
-});
+);
 
-exports.editUserRole = catchAsyncError(async (req: Request, res: Response) => {
-  const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
-    role: req.body.role,
-  };
+exports.editUserRole = catchAsyncError(
+  async (
+    req: Request<{ id: string }, {}, NewUserRequestBody>,
+    res: Response
+  ) => {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      role: req.body.role,
+    };
 
-  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
-    new: true,
-    runValidators: true,
-    userModifyAndModify: false,
-  });
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+      new: true,
+      runValidators: true,
+      userModifyAndModify: false,
+    });
 
-  if (!user) {
-    return resError(404, "User not found", res);
+    if (!user) {
+      return resError(404, "User not found", res);
+    }
+
+    return res.status(200).json({
+      success: true,
+      user,
+    });
   }
+);
 
-  return res.status(200).json({
-    success: true,
-    user,
-  });
-});
+exports.deleteUser = catchAsyncError(
+  async (
+    req: Request<{ id: string }>,
+    res: Response<MessageRespondBody>
+  ) => {
+    const user = await User.findById(req.params.id);
 
-exports.deleteUser = catchAsyncError(async (req: Request, res: Response) => {
-  const user = await User.findById(req.params.id);
+    // TODO: remove cloudinary later
 
-  // TODO: remove cloudinary later
+    if (user === null) {
+      return resError(404, "User not found", res);
+    }
 
-  if (user === null) {
-    return resError(404, "User not found", res);
+    if (user.role == "owner") {
+      return resError(400, "You can't delete Owner", res);
+    }
+
+    await User.deleteOne();
+
+    return resSuccess(200, "User deleted successfully", res);
   }
-
-  if (user.role == "owner") {
-    return resError(400, "You can't delete Owner", res);
-  }
-
-  await User.deleteOne();
-
-  return resSuccess(200, "User deleted successfully", res);
-});
+);
