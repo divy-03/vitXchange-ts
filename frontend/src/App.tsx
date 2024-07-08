@@ -19,6 +19,7 @@ const Shipping = lazy(() => import("./pages/Shipping"));
 const Login = lazy(() => import("./pages/Login"));
 const Reset = lazy(() => import("./pages/Reset"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
+const Products = lazy(() => import("./pages/Products"));
 
 const App = () => {
   const location = useLocation();
@@ -67,6 +68,7 @@ const App = () => {
       <Routes>
         <Route path="/account" element={<Login />} />
         <Route path="/reset/:token" element={<Reset />} />
+        <Route path="/products" element={<Products />} />
         <Route>
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/me" element={<UserProfile user={user} />} />

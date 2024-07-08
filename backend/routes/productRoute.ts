@@ -10,7 +10,11 @@ const {
 } = require("../controllers/productController");
 
 router.route("/product/new").post(fetchUser, createProduct);
-router.route("/products").get(getAllProducts);
-router.route("/product/:id").delete(fetchUser, deleteProduct).put(fetchUser, updateProduct);
+router.route("/product/all").get(getAllProducts);
+router
+  .route("/product/:id")
+  .delete(fetchUser, deleteProduct)
+  .put(fetchUser, updateProduct)
+  .get(getProductDetails);
 
 module.exports = router;

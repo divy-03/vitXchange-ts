@@ -130,7 +130,7 @@
     .logo {
       height: 40px;
       width: 40px;
-      background-color: black;
+      background-color: $darkest;
       outline: 2px solid red;
       border-top: 2px solid white;
       border-bottom: 2px solid white;
@@ -151,7 +151,7 @@
     .logoTxt {
       font-family: monospace;
       font-size: 22px;
-      color: black;
+      color: $darkest;
     }
 
     .V {

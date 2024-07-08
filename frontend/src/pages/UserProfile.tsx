@@ -7,7 +7,7 @@ import {
   useUpdateProfileMutation,
 } from "../RTK/UserApi";
 import useAuthGuard from "../tools/AuthGuard";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 type navProps = {
@@ -31,39 +31,43 @@ interface pswrdType {
   confirmPassword: string;
 }
 
-const pswrdBox = document.querySelector(".passwordBox") as HTMLDialogElement;
-
-if (pswrdBox) {
-  pswrdBox.addEventListener("click", (e) => {
-    const pswrdBoxDimensions = pswrdBox.getBoundingClientRect();
-    if (
-      e.clientX < pswrdBoxDimensions.left ||
-      e.clientX > pswrdBoxDimensions.right ||
-      e.clientY < pswrdBoxDimensions.top ||
-      e.clientY > pswrdBoxDimensions.bottom
-    ) {
-      pswrdBox.close();
-    }
-  });
-}
-
-const proBox = document.querySelector(".proBox") as HTMLDialogElement;
-
-if (proBox) {
-  proBox.addEventListener("click", (e) => {
-    const proBoxDimensions = proBox.getBoundingClientRect();
-    if (
-      e.clientX < proBoxDimensions.left ||
-      e.clientX > proBoxDimensions.right ||
-      e.clientY < proBoxDimensions.top ||
-      e.clientY > proBoxDimensions.bottom
-    ) {
-      proBox.close();
-    }
-  });
-}
-
 const UserProfile = ({ user }: navProps) => {
+  useEffect(() => {
+    const pswrdBox = document.querySelector(
+      ".passwordBox"
+    ) as HTMLDialogElement;
+
+    if (pswrdBox) {
+      pswrdBox.addEventListener("click", (e) => {
+        const pswrdBoxDimensions = pswrdBox.getBoundingClientRect();
+        if (
+          e.clientX < pswrdBoxDimensions.left ||
+          e.clientX > pswrdBoxDimensions.right ||
+          e.clientY < pswrdBoxDimensions.top ||
+          e.clientY > pswrdBoxDimensions.bottom
+        ) {
+          pswrdBox.close();
+        }
+      });
+    }
+
+    const proBox = document.querySelector(".proBox") as HTMLDialogElement;
+
+    if (proBox) {
+      proBox.addEventListener("click", (e) => {
+        const proBoxDimensions = proBox.getBoundingClientRect();
+        if (
+          e.clientX < proBoxDimensions.left ||
+          e.clientX > proBoxDimensions.right ||
+          e.clientY < proBoxDimensions.top ||
+          e.clientY > proBoxDimensions.bottom
+        ) {
+          proBox.close();
+        }
+      });
+    }
+  }, []);
+
   const navigate = useNavigate();
   const [logoutUser] = useLogoutUserMutation();
   const [updateProfile] = useUpdateProfileMutation();
@@ -103,6 +107,7 @@ const UserProfile = ({ user }: navProps) => {
         return toast.error(result.data.error);
       }
       toast.success(result.data.message);
+      const proBox = document.querySelector(".proBox") as HTMLDialogElement;
       proBox.close();
     } catch (error) {
       toast.error(String(error));
@@ -145,6 +150,9 @@ const UserProfile = ({ user }: navProps) => {
           return toast.error((fetchError.data as { error: string }).error);
       }
       toast.success(result.data.message);
+      const pswrdBox = document.querySelector(
+        ".passwordBox"
+      ) as HTMLDialogElement;
       pswrdBox.close();
     } catch (error) {
       toast.error(String(error));
