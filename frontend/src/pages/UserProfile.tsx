@@ -66,6 +66,8 @@ const UserProfile = ({ user }: navProps) => {
         }
       });
     }
+
+    console.log("Called!!");
   }, []);
 
   const navigate = useNavigate();

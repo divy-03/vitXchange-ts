@@ -19,9 +19,7 @@ const Products = () => {
   return (
     <div>
       {isLoading ? (
-        <div>
-          <Loader />
-        </div>
+        <Loader />
       ) : error ? (
         <div className="loading">
           <h1 style={{ fontSize: "3vmax", color: "gray" }}>{String(error)}</h1>
