@@ -511,7 +511,8 @@
 
                     > input {
                       padding: 1rem 2rem;
-                      width: 100%;
+                      width: calc(15rem + 10vw);
+                      // text-align: center;
                       @include sansa();
                       font-size: 1.1rem;
                       border: none;

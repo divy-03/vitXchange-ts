@@ -1,6 +1,6 @@
+@import "variables";
 @import "mixin";
 @import "dashboard";
-@import "variables";
 @import "products";
 @import "loader";
 @import "navbar/navbar";
@@ -14,7 +14,8 @@
 @import "home";
 @import "shipping";
 @import "login";
-@import "me";
+@import "userProfile";
+@import "productDetails";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

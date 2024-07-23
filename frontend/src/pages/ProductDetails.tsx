@@ -6,16 +6,16 @@ const ProductDetails = () => {
   const { id } = useParams();
   const { data, error, isLoading } = useGetProductDetailsQuery(id);
 
-  console.log(data.product.images[0].url);
-
+  
   if (error) {
     return <div>Failed to load Product</div>;
   }
-
+  
   if (isLoading) {
     return <Loader />;
   }
-
+  console.log(data.product);
+  
   return (
     <div className="productDetails">
       <div>
@@ -26,8 +26,8 @@ const ProductDetails = () => {
           <h2>{data.product.name}</h2>
           <p>Product # {id}</p>
           <div>
-            <p>Description: </p>
-            <p>{data.product.description}</p>
+            <span>Description: </span>
+            <span>{data.product.description}</span>
           </div>
         </div>
 
