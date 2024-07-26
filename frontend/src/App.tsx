@@ -35,6 +35,10 @@ const App = () => {
     name: string;
     email: string;
     role: string;
+    avatar: {
+      public_id: string;
+      url: string;
+    };
     __v: number;
   }
 
@@ -43,12 +47,17 @@ const App = () => {
     name: "",
     email: "",
     role: "",
+    avatar: {
+      public_id: "",
+      url: "",
+    },
     __v: 0,
   });
 
   useEffect(() => {
     getUserProfile({})
       .then((result) => {
+        // console.log(result.data.user);
         setUser(result.data.user);
       })
       .catch(() => {
@@ -57,6 +66,10 @@ const App = () => {
           email: "",
           name: "",
           role: "",
+          avatar: {
+            public_id: "",
+            url: "",
+          },
           __v: 0,
         });
       });

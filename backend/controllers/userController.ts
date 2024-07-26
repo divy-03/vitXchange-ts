@@ -15,7 +15,8 @@ import sendEmail from "../utils/sendEmail";
 import { check, validationResult } from "express-validator";
 import resError from "../tools/resError";
 import resSuccess from "../tools/resSuccess";
-import crypto from "crypto";
+import crypto, { publicDecrypt } from "crypto";
+import { v2 } from "cloudinary";
 const catchAsyncError = require("../middleware/catchAsyncError");
 
 const mapUserDocumentToUser = (userDoc: Document) => {
@@ -26,19 +27,39 @@ const mapUserDocumentToUser = (userDoc: Document) => {
     email: userObj.email,
     password: userObj.password,
     role: userObj.role,
+    avatar: {
+      public_id: userObj.avatar.public_id,
+      url: userObj.avatar.url,
+    },
   };
 };
 
 exports.registerUser = catchAsyncError(
   async (req: Request<{}, {}, NewUserRequestBody>, res: Response) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, avatar } = req.body;
     const salt = await bcrypt.genSaltSync(10);
     const secPass = await bcrypt.hashSync(password, salt);
+
+    // Usually this error is handled by 1100 in async errors but hardcoding here, bcoz not working now!
+    const already = await User.findOne({ email: email });
+    if (already) {
+      return resError(403, "User already exist", res);
+    }
+
+    const avt = await v2.uploader.upload(avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
 
     const userDoc = await User.create({
       name,
       email,
       password: secPass,
+      avatar: {
+        public_id: avt.public_id,
+        url: avt.secure_url,
+      },
     });
 
     const user = mapUserDocumentToUser(userDoc);
@@ -190,7 +211,10 @@ exports.resetPassword = catchAsyncError(
 );
 
 exports.updatePassword = catchAsyncError(
-  async (req: Request<{}, {}, UpdatePasswordRequestBody>, res: Response<MessageRespondBody>) => {
+  async (
+    req: Request<{}, {}, UpdatePasswordRequestBody>,
+    res: Response<MessageRespondBody>
+  ) => {
     const user = await User.findById(req.user?._id).select("+password");
 
     const passswordCompare = await bcrypt.compareSync(
@@ -220,14 +244,28 @@ exports.updatePassword = catchAsyncError(
 );
 
 exports.updateProfile = catchAsyncError(
-  async (req: Request<{}, {}, UpdateProfileRequestBody>, res: Response<MessageRespondBody>) => {
+  async (
+    req: Request<{}, {}, UpdateProfileRequestBody>,
+    res: Response<MessageRespondBody>
+  ) => {
+    const user = await User.findById(req.user?._id);
+    const imageId = user ? user?.avatar.public_id : "";
+    await v2.uploader.destroy(imageId);
+
+    const avt = await v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
     const newUserData = {
       name: req.body.name,
       email: req.body.email,
+      avatar: {
+        public_id: avt.public_id,
+        url: avt.url,
+      },
     };
-
-    // TODO: avatar image
-
     await User.findByIdAndUpdate(req.user?._id, newUserData, {
       new: true,
       runValidators: true,
@@ -290,10 +328,7 @@ exports.editUserRole = catchAsyncError(
 );
 
 exports.deleteUser = catchAsyncError(
-  async (
-    req: Request<{ id: string }>,
-    res: Response<MessageRespondBody>
-  ) => {
+  async (req: Request<{ id: string }>, res: Response<MessageRespondBody>) => {
     const user = await User.findById(req.params.id);
 
     // TODO: remove cloudinary later

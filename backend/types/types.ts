@@ -10,6 +10,7 @@ export interface NewUserRequestBody {
   name: string;
   email: string;
   password: string;
+  avatar: string;
   role: "user" | "admin" | "owner";
 }
 
@@ -32,6 +33,7 @@ export interface UpdatePasswordRequestBody {
 export interface UpdateProfileRequestBody {
   name: string;
   email: string;
+  avatar: string;
 }
 
 export interface NewProductRequestBody {

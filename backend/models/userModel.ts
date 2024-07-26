@@ -7,6 +7,10 @@ export interface IUser extends Document {
   email: string;
   role: "user" | "admin" | "owner";
   password: string;
+  avatar: {
+    public_id: string;
+    url: string;
+  };
   resetPasswordToken?: string | undefined;
   resetPasswordExpire?: Date | undefined;
   getResetPasswordToken(): string;
@@ -21,6 +25,7 @@ const userSchema = new mongoose.Schema<IUser>({
     type: String,
     required: [true, "Please enter an Email"],
     validate: [validator.isEmail],
+    unique: true,
   },
   password: {
     type: String,
@@ -31,6 +36,10 @@ const userSchema = new mongoose.Schema<IUser>({
   role: {
     type: String,
     default: "user",
+  },
+  avatar: {
+    public_id: String,
+    url: String,
   },
   resetPasswordToken: {
     type: String,

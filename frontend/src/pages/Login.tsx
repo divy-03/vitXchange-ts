@@ -16,6 +16,7 @@ interface User {
   name: string;
   email: string;
   password: string;
+  avatar: string;
 }
 
 const Login = () => {
@@ -44,17 +45,28 @@ const Login = () => {
     name: "",
     email: "",
     password: "",
+    avatar: "",
   });
 
   const [addUser, { isLoading: isRl }] = useAddUserMutation();
 
   const registerDataChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    if (e.target.name === 'avatar' && e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setUser({ ...user, avatar: reader.result as string });
+      };
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
   };
 
   const registerSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = await addUser(user);
+    console.log(user);
 
     if (result.error) {
       const fetchError = result.error as FetchBaseQueryError;
@@ -188,6 +200,12 @@ const Login = () => {
                 name="password"
                 value={user.password}
                 required
+                onChange={registerDataChange}
+              />
+              <input
+                type="file"
+                name="avatar"
+                accept="image/*"
                 onChange={registerDataChange}
               />
               <input type="submit" value="Register" />

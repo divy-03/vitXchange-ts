@@ -1,4 +1,4 @@
-import { FaSignOutAlt, FaUser } from "react-icons/fa";
+import { FaRegEdit, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -15,6 +15,10 @@ type navProps = {
     _id: string;
     name: string;
     email: string;
+    avatar: {
+      public_id: string;
+      url: string;
+    };
     role: string;
     __v: number;
   };
@@ -23,6 +27,7 @@ type navProps = {
 interface UserProfile {
   name: string;
   email: string;
+  avatar: string;
 }
 
 interface pswrdType {
@@ -67,7 +72,7 @@ const UserProfile = ({ user }: navProps) => {
       });
     }
 
-    console.log("Called!!");
+    // console.log("Called!!");
   }, []);
 
   const navigate = useNavigate();
@@ -80,10 +85,20 @@ const UserProfile = ({ user }: navProps) => {
   const [userPro, setUserPro] = useState<UserProfile>({
     name: user.name ?? "",
     email: user.email ?? "",
+    avatar: user.avatar.url ?? "",
   });
 
   const dataChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserPro({ ...userPro, [e.target.name]: e.target.value });
+    if (e.target.name === "avatar" && e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setUserPro({ ...userPro, avatar: reader.result as string });
+      };
+    } else {
+      setUserPro({ ...userPro, [e.target.name]: e.target.value });
+    }
   };
 
   const handleLogOut = async () => {
@@ -104,6 +119,7 @@ const UserProfile = ({ user }: navProps) => {
   const handleUpdateProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      console.log(userPro);
       const result = await updateProfile(userPro);
       if (!result.data.success) {
         return toast.error(result.data.error);
@@ -184,6 +200,7 @@ const UserProfile = ({ user }: navProps) => {
 
           <div className="container">
             <Link to={"/me"}>
+              {/* <img src={userPro.avatar} alt="" /> */}
               <FaUser />
             </Link>
             <div className="dropUser">
@@ -215,8 +232,8 @@ const UserProfile = ({ user }: navProps) => {
         <div className="meBox">
           <div>
             <div>
-              <div className="userImg">
-                <FaUser />
+              <div className="userImg" onClick={showProBox}>
+                <img src={userPro.avatar} alt={userPro.name} />
               </div>
               <div>
                 <div>
@@ -248,6 +265,13 @@ const UserProfile = ({ user }: navProps) => {
                   <button type="submit" onClick={showProBox}>
                     Update Profile
                   </button>
+
+                  <dialog className="imgBox">
+                    <img src={userPro.avatar} alt={userPro.name} />
+                    <button>
+                      <FaRegEdit />
+                    </button>
+                  </dialog>
 
                   <dialog className="passwordBox">
                     <h2>Set New Password</h2>
@@ -281,6 +305,7 @@ const UserProfile = ({ user }: navProps) => {
                   </dialog>
                   <dialog className="proBox">
                     <h2>Update Profile</h2>
+                    <img src={userPro.avatar} alt={userPro.name} />
                     <form method="dialog" onSubmit={handleUpdateProfile}>
                       <input
                         type="text"
@@ -297,6 +322,12 @@ const UserProfile = ({ user }: navProps) => {
                         onChange={dataChange}
                         placeholder="Enter email"
                         name="email"
+                      />
+                      <input
+                        type="file"
+                        name="avatar"
+                        accept="image/*"
+                        onChange={dataChange}
                       />
                       <input type="submit" value={"Update Profile"} />
                     </form>

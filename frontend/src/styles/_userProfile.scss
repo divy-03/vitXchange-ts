@@ -151,6 +151,12 @@
               width: 80%;
               font-size: 8rem;
               border-radius: 2rem;
+              
+              > img {
+                width: auto;
+                height: 90%;
+                border-radius: 1rem;
+              }
             }
             > div {
               @include flex(column, center, center, 2rem);
@@ -504,6 +510,11 @@
                   > h2 {
                     @include sansa();
                     font-size: 2rem;
+                  }
+
+                  > img {
+                    max-width: 150px;
+                    max-height: 200px;
                   }
 
                   > form {
