@@ -248,25 +248,35 @@ exports.updateProfile = catchAsyncError(
     req: Request<{}, {}, UpdateProfileRequestBody>,
     res: Response<MessageRespondBody>
   ) => {
-    const user = await User.findById(req.user?._id);
-    const imageId = user ? user?.avatar.public_id : "";
-    await v2.uploader.destroy(imageId);
+    const userId = req.user?._id;
+    const user = await User.findById(userId);
 
-    const avt = await v2.uploader.upload(req.body.avatar, {
-      folder: "avatars",
-      width: 150,
-      crop: "scale",
-    });
+    if (user?.avatar.public_id) {
+      await v2.uploader.destroy(user.avatar.public_id);
+    }
 
-    const newUserData = {
+    let avt = null;
+    if (req.body.avatar !== "noImg") {
+      avt = await v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+    }
+
+    const newUserData: any = {
       name: req.body.name,
       email: req.body.email,
-      avatar: {
+    };
+
+    if (avt) {
+      newUserData.avatar = {
         public_id: avt.public_id,
         url: avt.url,
-      },
-    };
-    await User.findByIdAndUpdate(req.user?._id, newUserData, {
+      };
+    }
+
+    await User.findByIdAndUpdate(userId, newUserData, {
       new: true,
       runValidators: true,
     });

@@ -1,5 +1,5 @@
 import { FaRegEdit, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useRouteError } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useLogoutUserMutation,
@@ -85,7 +85,7 @@ const UserProfile = ({ user }: navProps) => {
   const [userPro, setUserPro] = useState<UserProfile>({
     name: user.name ?? "",
     email: user.email ?? "",
-    avatar: user.avatar.url ?? "",
+    avatar: "noImg",
   });
 
   const dataChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +119,7 @@ const UserProfile = ({ user }: navProps) => {
   const handleUpdateProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(userPro);
+      // console.log(userPro);
       const result = await updateProfile(userPro);
       if (!result.data.success) {
         return toast.error(result.data.error);
@@ -233,7 +233,7 @@ const UserProfile = ({ user }: navProps) => {
           <div>
             <div>
               <div className="userImg" onClick={showProBox}>
-                <img src={userPro.avatar} alt={userPro.name} />
+                <img src={user.avatar.url} alt={userPro.name} />
               </div>
               <div>
                 <div>
@@ -282,6 +282,7 @@ const UserProfile = ({ user }: navProps) => {
                         value={pswrd.oldPassword}
                         onChange={pswrdChange}
                         placeholder="Enter your Current Password"
+                        autoComplete="password"
                         name="oldPassword"
                       />
                       <input
@@ -290,6 +291,7 @@ const UserProfile = ({ user }: navProps) => {
                         value={pswrd.newPassword}
                         onChange={pswrdChange}
                         placeholder="Set New Current Password"
+                        autoComplete="new-password"
                         name="newPassword"
                       />
                       <input
@@ -305,7 +307,7 @@ const UserProfile = ({ user }: navProps) => {
                   </dialog>
                   <dialog className="proBox">
                     <h2>Update Profile</h2>
-                    <img src={userPro.avatar} alt={userPro.name} />
+                    <img src={userPro.avatar === "noImg" ? user.avatar.url : userPro.avatar} alt={userPro.name} />
                     <form method="dialog" onSubmit={handleUpdateProfile}>
                       <input
                         type="text"
