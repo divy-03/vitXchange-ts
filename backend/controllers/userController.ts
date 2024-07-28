@@ -48,7 +48,7 @@ exports.registerUser = catchAsyncError(
 
     const avt = await v2.uploader.upload(avatar, {
       folder: "avatars",
-      width: 150,
+      width: 300,
       crop: "scale",
     });
 
@@ -259,7 +259,7 @@ exports.updateProfile = catchAsyncError(
     if (req.body.avatar !== "noImg") {
       avt = await v2.uploader.upload(req.body.avatar, {
         folder: "avatars",
-        width: 150,
+        width: 300,
         crop: "scale",
       });
     }

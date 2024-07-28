@@ -73,3 +73,24 @@ exports.deleteProduct = catchAsyncError(async (req: Request, res: Response) => {
 
   return resSuccess(200, "Product deleted successfully", res);
 });
+
+export const getCartProducts = catchAsyncError(
+  async (req: Request, res: Response) => {
+    const cartIds = req.user?.cart; // Import from req.user.cart
+    const cart = await Product.find({ _id: { $in: cartIds } });
+    let totalAmount = 0;
+    cart.forEach((product) => {
+      totalAmount = totalAmount + product.price;
+    });
+    res.status(200).json({
+      success: true,
+      totalAmount,
+      cart,
+    });
+  }
+);
+
+exports.addToCart = catchAsyncError(async (req: Request, res: Response) => {
+
+  
+});

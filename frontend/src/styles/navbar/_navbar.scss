@@ -275,12 +275,26 @@
         }
       }
       > a {
-        padding: 1rem 1.2rem;
         border-radius: 50%;
         border: none;
         background-color: $lightGrey;
         color: $darkBlue;
         cursor: pointer;
+        @include flex();
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border: none;
+        background-color: $lightGrey;
+        color: $darkBlue;
+        cursor: pointer;
+
+        > img {
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          border-radius: 50%; 
+        }
       }
     }
     > .login {

@@ -11,6 +11,7 @@ export interface IUser extends Document {
     public_id: string;
     url: string;
   };
+  cart: mongoose.Schema.Types.ObjectId[];
   resetPasswordToken?: string | undefined;
   resetPasswordExpire?: Date | undefined;
   getResetPasswordToken(): string;
@@ -49,6 +50,12 @@ const userSchema = new mongoose.Schema<IUser>({
     type: Date,
     default: undefined,
   },
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
 });
 
 userSchema.methods.getResetPasswordToken = function () {

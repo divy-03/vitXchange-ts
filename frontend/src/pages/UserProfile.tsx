@@ -1,5 +1,5 @@
 import { FaRegEdit, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { Link, useNavigate, useRouteError } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useLogoutUserMutation,
@@ -9,6 +9,7 @@ import {
 import useAuthGuard from "../tools/AuthGuard";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import Loader from "../components/Loader";
 
 type navProps = {
   user: {
@@ -76,8 +77,9 @@ const UserProfile = ({ user }: navProps) => {
   }, []);
 
   const navigate = useNavigate();
-  const [logoutUser] = useLogoutUserMutation();
-  const [updateProfile] = useUpdateProfileMutation();
+  const [logoutUser, { isLoading: loL }] = useLogoutUserMutation();
+  const [updateProfile, { isLoading: upL }] = useUpdateProfileMutation();
+  const [updatePassword, { isLoading: upsL }] = useUpdatePasswordMutation();
 
   // using authGuard
   useAuthGuard();
@@ -125,8 +127,6 @@ const UserProfile = ({ user }: navProps) => {
         return toast.error(result.data.error);
       }
       toast.success(result.data.message);
-      const proBox = document.querySelector(".proBox") as HTMLDialogElement;
-      proBox.close();
     } catch (error) {
       toast.error(String(error));
     }
@@ -155,8 +155,6 @@ const UserProfile = ({ user }: navProps) => {
     setPswrd({ ...pswrd, [e.target.name]: e.target.value });
   };
 
-  const [updatePassword] = useUpdatePasswordMutation();
-
   const handleChangePassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -168,14 +166,12 @@ const UserProfile = ({ user }: navProps) => {
           return toast.error((fetchError.data as { error: string }).error);
       }
       toast.success(result.data.message);
-      const pswrdBox = document.querySelector(
-        ".passwordBox"
-      ) as HTMLDialogElement;
-      pswrdBox.close();
     } catch (error) {
       toast.error(String(error));
     }
   };
+
+  if (upL || upsL || loL) return <Loader />;
 
   return (
     <div className="meContainer">
@@ -307,8 +303,27 @@ const UserProfile = ({ user }: navProps) => {
                   </dialog>
                   <dialog className="proBox">
                     <h2>Update Profile</h2>
-                    <img src={userPro.avatar === "noImg" ? user.avatar.url : userPro.avatar} alt={userPro.name} />
                     <form method="dialog" onSubmit={handleUpdateProfile}>
+                      <div className="file-input-container">
+                        <img
+                          src={
+                            userPro.avatar === "noImg"
+                              ? user.avatar.url
+                              : userPro.avatar
+                          }
+                          alt={userPro.name}
+                        />
+                        <input
+                          type="file"
+                          id="avatar"
+                          name="avatar"
+                          accept="image/*"
+                          onChange={dataChange}
+                        />
+                        <label htmlFor="avatar" className="file-input-label">
+                          <FaRegEdit />
+                        </label>
+                      </div>
                       <input
                         type="text"
                         required
@@ -324,12 +339,6 @@ const UserProfile = ({ user }: navProps) => {
                         onChange={dataChange}
                         placeholder="Enter email"
                         name="email"
-                      />
-                      <input
-                        type="file"
-                        name="avatar"
-                        accept="image/*"
-                        onChange={dataChange}
                       />
                       <input type="submit" value={"Update Profile"} />
                     </form>

@@ -1,8 +1,12 @@
 import express, { NextFunction, Request, Response } from "express";
 import errorMiddleware from "./middleware/errors";
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+
+app.use(bodyParser.json({ limit: "10mb" }));
+// app.use(bodyParser.urleconded({ limit: "10mb", extended: true }));
 
 const corsOptions = {
   origin: "http://localhost:5173", // Correct origin

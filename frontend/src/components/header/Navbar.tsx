@@ -12,6 +12,10 @@ type navProps = {
     name: string;
     email: string;
     role: string;
+    avatar: {
+      public_id: string;
+      url: string;
+    };
     __v: number;
   };
 };
@@ -180,10 +184,10 @@ const Navbar = ({ user }: navProps) => {
             </div>
             <div className="container">
               <Link to={"/me"}>
-                <FaUser />
+                <img src={user.avatar.url} alt={user.name}/>
               </Link>
               <div className="dropUser">
-                {(user.role === "admin" || user.role === "owner")  && (
+                {(user.role === "admin" || user.role === "owner") && (
                   <Link to={"/admin/dashboard"} className="udlLeft">
                     Dashboard
                   </Link>

@@ -50,18 +50,60 @@ const Login = () => {
 
   const [addUser, { isLoading: isRl }] = useAddUserMutation();
 
-  const registerDataChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'avatar' && e.target.files) {
-      const file = e.target.files[0];
+  const resizeImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = document.createElement('img');
       const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setUser({ ...user, avatar: reader.result as string });
+  
+      reader.onload = (e) => {
+        img.src = e.target?.result as string;
       };
+  
+      reader.onerror = (e) => {
+        reject(e);
+      };
+  
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        if (!ctx) {
+          reject(new Error("Could not get canvas context"));
+          return;
+        }
+  
+        // Set the canvas dimensions to the desired size
+        const width = 350;
+        const scale = width / img.width;
+        canvas.width = width;
+        canvas.height = img.height * scale;
+  
+        // Draw the image on the canvas with the new dimensions
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+        // Convert the canvas back to a base64 data URL
+        const base64 = canvas.toDataURL(file.type, 0.8);
+        resolve(base64);
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  };
+  
+  const registerDataChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "avatar" && e.target.files) {
+      const file = e.target.files[0];
+      try {
+        const resizedImage = await resizeImage(file);
+        setUser({ ...user, avatar: resizedImage });
+      } catch (error) {
+        console.error("Error resizing image:", error);
+      }
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
   };
+  
 
   const registerSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
