@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import Product from "../models/productModel";
+import Product, { IProduct } from "../models/productModel";
 import { NewProductRequestBody } from "../types/types";
 import resError from "../tools/resError";
 import resSuccess from "../tools/resSuccess";
+import mongoose from "mongoose";
+import User from "../models/userModel";
 const catchAsyncError = require("../middleware/catchAsyncError");
 
 exports.createProduct = catchAsyncError(
@@ -76,21 +78,53 @@ exports.deleteProduct = catchAsyncError(async (req: Request, res: Response) => {
 
 export const getCartProducts = catchAsyncError(
   async (req: Request, res: Response) => {
-    const cartIds = req.user?.cart; // Import from req.user.cart
-    const cart = await Product.find({ _id: { $in: cartIds } });
+    const user = await User.findById(req.user?.id).populate('cart');
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
     let totalAmount = 0;
-    cart.forEach((product) => {
-      totalAmount = totalAmount + product.price;
+    user.cart.forEach((product) => {
+      totalAmount += (product as IProduct).price;
     });
+
     res.status(200).json({
       success: true,
       totalAmount,
-      cart,
+      cart: user.cart,
     });
   }
 );
 
-exports.addToCart = catchAsyncError(async (req: Request, res: Response) => {
+export const addToCart = catchAsyncError(async (req: Request, res: Response) => {
+  const userId = req.user?.id;
+  const { productId } = req.body
 
-  
+  if (
+    !mongoose.Types.ObjectId.isValid(userId) ||
+    !mongoose.Types.ObjectId.isValid(productId)
+  ) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid ID format" });
+  }
+
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $push: { cart: productId } },
+    { new: true, useFindAndModify: false }
+  ).populate("cart");
+
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+
+  res.status(200).json({
+    success: true,
+    cart: user.cart,
+  });
 });

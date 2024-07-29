@@ -1,6 +1,7 @@
-import mongoose, { Document, Model } from "mongoose";
+import mongoose, { Document, Model, Types } from "mongoose";
 import validator from "validator";
 import crypto from "crypto";
+import { IProduct } from "./productModel";
 
 export interface IUser extends Document {
   name: string;
@@ -11,7 +12,7 @@ export interface IUser extends Document {
     public_id: string;
     url: string;
   };
-  cart: mongoose.Schema.Types.ObjectId[];
+  cart: (Types.ObjectId | IProduct)[];
   resetPasswordToken?: string | undefined;
   resetPasswordExpire?: Date | undefined;
   getResetPasswordToken(): string;

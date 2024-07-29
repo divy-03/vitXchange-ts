@@ -1,4 +1,5 @@
 import express from "express";
+import { addToCart } from "../controllers/productController";
 const router = express.Router();
 const { fetchUser } = require("../middleware/auth");
 const {
@@ -18,6 +19,7 @@ router
   .put(fetchUser, updateProduct)
   .get(getProductDetails);
 
-router.route("/cart/products").get(getCartProducts);
+router.route("/cart/products").get(fetchUser, getCartProducts);
+router.route("/cart/add").post(fetchUser, addToCart);
 
 module.exports = router;

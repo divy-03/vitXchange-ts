@@ -1,4 +1,4 @@
-import { FaShoppingBag, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Cart from "./Cart";
 import { useState } from "react";

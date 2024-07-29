@@ -123,6 +123,9 @@ const UserProfile = ({ user }: navProps) => {
     try {
       // console.log(userPro);
       const result = await updateProfile(userPro);
+      if (!result.data) {
+        return toast.error("Unkown error occured");
+      }
       if (!result.data.success) {
         return toast.error(result.data.error);
       }
@@ -196,8 +199,8 @@ const UserProfile = ({ user }: navProps) => {
 
           <div className="container">
             <Link to={"/me"}>
-              {/* <img src={userPro.avatar} alt="" /> */}
-              <FaUser />
+              <img src={user.avatar.url} alt="" />
+              {/* <FaUser /> */}
             </Link>
             <div className="dropUser">
               {user.role === "admin" && (
