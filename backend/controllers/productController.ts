@@ -76,55 +76,55 @@ exports.deleteProduct = catchAsyncError(async (req: Request, res: Response) => {
   return resSuccess(200, "Product deleted successfully", res);
 });
 
-export const getCartProducts = catchAsyncError(
-  async (req: Request, res: Response) => {
-    const user = await User.findById(req.user?.id).populate('cart');
+// export const getCartProducts = catchAsyncError(
+//   async (req: Request, res: Response) => {
+//     const user = await User.findById(req.user?.id).populate('cart');
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found',
-      });
-    }
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'User not found',
+//       });
+//     }
 
-    let totalAmount = 0;
-    user.cart.forEach((product) => {
-      totalAmount += (product as IProduct).price;
-    });
+//     let totalAmount = 0;
+//     user.cart.forEach((product) => {
+//       totalAmount += (product as IProduct).price;
+//     });
 
-    res.status(200).json({
-      success: true,
-      totalAmount,
-      cart: user.cart,
-    });
-  }
-);
+//     res.status(200).json({
+//       success: true,
+//       totalAmount,
+//       cartItems: user.cart,
+//     });
+//   }
+// );
 
-export const addToCart = catchAsyncError(async (req: Request, res: Response) => {
-  const userId = req.user?.id;
-  const { productId } = req.body
+// export const addToCart = catchAsyncError(async (req: Request, res: Response) => {
+//   const userId = req.user?.id;
+//   const { productId } = req.body
 
-  if (
-    !mongoose.Types.ObjectId.isValid(userId) ||
-    !mongoose.Types.ObjectId.isValid(productId)
-  ) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Invalid ID format" });
-  }
+//   if (
+//     !mongoose.Types.ObjectId.isValid(userId) ||
+//     !mongoose.Types.ObjectId.isValid(productId)
+//   ) {
+//     return res
+//       .status(400)
+//       .json({ success: false, message: "Invalid ID format" });
+//   }
 
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { $push: { cart: productId } },
-    { new: true, useFindAndModify: false }
-  ).populate("cart");
+//   const user = await User.findByIdAndUpdate(
+//     userId,
+//     { $push: { cart: productId } },
+//     { new: true, useFindAndModify: false }
+//   ).populate("cart");
 
-  if (!user) {
-    return res.status(404).json({ success: false, message: "User not found" });
-  }
+//   if (!user) {
+//     return res.status(404).json({ success: false, message: "User not found" });
+//   }
 
-  res.status(200).json({
-    success: true,
-    cart: user.cart,
-  });
-});
+//   res.status(200).json({
+//     success: true,
+//     cart: user.cart,
+//   });
+// });

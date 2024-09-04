@@ -12,6 +12,7 @@ import Footer from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetUserProfileMutation } from "./RTK/UserApi";
+import CartX from "./components/Cart/CartX";
 
 const Admin = lazy(() => import("./admin/Admin"));
 const Home = lazy(() => import("./pages/Home"));
@@ -85,6 +86,7 @@ const App = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route>
+          <Route path="/cart" element={<CartX />} />
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/me" element={<UserProfile user={user} />} />
         </Route>

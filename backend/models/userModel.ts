@@ -1,7 +1,6 @@
 import mongoose, { Document, Model, Types } from "mongoose";
 import validator from "validator";
 import crypto from "crypto";
-import { IProduct } from "./productModel";
 
 export interface IUser extends Document {
   name: string;
@@ -12,7 +11,6 @@ export interface IUser extends Document {
     public_id: string;
     url: string;
   };
-  cart: (Types.ObjectId | IProduct)[];
   resetPasswordToken?: string | undefined;
   resetPasswordExpire?: Date | undefined;
   getResetPasswordToken(): string;
@@ -51,12 +49,6 @@ const userSchema = new mongoose.Schema<IUser>({
     type: Date,
     default: undefined,
   },
-  cart: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-  ],
 });
 
 userSchema.methods.getResetPasswordToken = function () {

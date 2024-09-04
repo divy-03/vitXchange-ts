@@ -38,6 +38,10 @@ export const productApi = createApi({
         method: "DELETE",
       }),
     }),
+
+    getCartProducts: builder.query({
+      query: () => "/cart/products"
+    }),
   }),
 });
 
@@ -46,4 +50,5 @@ export const {
   useDeleteProductMutation,
   useGetAllProductsQuery,
   useGetProductDetailsQuery,
+  useGetCartProductsQuery,
 } = productApi;

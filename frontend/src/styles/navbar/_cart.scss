@@ -52,7 +52,7 @@ $cartWidth: 47vw;
   }
   > .cartItemContainer {
     @include flex(column, start, center, 0);
-    z-index: inherit;
+    // z-index: inherit;
     min-height: 55.5dvh;
     margin-top: 5rem;
     overflow-y: auto;
@@ -77,64 +77,64 @@ $cartWidth: 47vw;
         padding: 1rem;
         font-size: 1.2rem;
         color: black;
-        border-radius: .5rem;
+        border-radius: 0.5rem;
       }
     }
   }
-  > .cartDetails {
-    border-top: 1px solid $violet;
-    @include flex(column, center, center, 0.5rem);
-    z-index: 30;
+}
+.cartDetails {
+  border-top: 1px solid $violet;
+  @include flex(column, center, center, 0.5rem);
+  // z-index: 30;
 
-    > div {
-      @include flex(row, space-between, center, 0);
-      width: 80%;
-      padding: 3%;
+  > div {
+    @include flex(row, space-between, center, 0);
+    width: 80%;
+    padding: 3%;
 
-      > b {
-        font-size: 2rem;
-        font-family: "Sansa";
-      }
+    > b {
+      font-size: 2rem;
+      font-family: "Sansa";
     }
-    > button {
-      @include flex();
-      width: $cartWidth;
-      font-size: 1rem;
-      font-family: monospace;
-      padding: 1.9rem;
-      border: none;
-      color: $lightBlue;
-      background-color: $darkest;
-      cursor: pointer;
-      transition: all 0.4s ease;
+  }
+  > button {
+    @include flex();
+    width: $cartWidth;
+    font-size: 1rem;
+    font-family: monospace;
+    padding: 1.9rem;
+    border: none;
+    color: $lightBlue;
+    background-color: $darkest;
+    cursor: pointer;
+    transition: all 0.4s ease;
 
-      &:hover {
-        background-color: $violet;
-        color: $darkest;
-        outline: 1px solid;
-        width: calc($cartWidth - 2px);
-      }
-
-      &:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-      }
-    }
-    > button:nth-child(2) {
-      width: calc($cartWidth - 1vw);
+    &:hover {
       background-color: $violet;
       color: $darkest;
-      border: 1px solid;
+      outline: 1px solid;
+      width: calc($cartWidth - 2px);
+    }
 
-      &:hover {
-        color: $lightBlue;
-        background-color: $darkest;
-      }
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+  > button:nth-child(2) {
+    width: calc($cartWidth - 1vw);
+    background-color: $violet;
+    color: $darkest;
+    border: 1px solid;
 
-      &:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-      }
+    &:hover {
+      color: $lightBlue;
+      background-color: $darkest;
+    }
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
     }
   }
 }
@@ -143,4 +143,16 @@ $cartWidth: 47vw;
   visibility: visible;
   width: $cartWidth;
   opacity: 1;
+}
+
+.cartXContainer {
+  // border: 2px solid black;
+  margin-top: 5rem;
+  padding: 2rem;
+  @include flex();
+
+  > div {
+    width: 50%;
+    border-radius: 20px;
+  }
 }

@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "10mb" }));
 // app.use(bodyParser.urleconded({ limit: "10mb", extended: true }));
 
@@ -39,6 +41,9 @@ app.use("/api/v1", user);
 
 const product = require("./routes/productRoute");
 app.use("/api/v1", product);
+
+const cart = require("./routes/cartRoute");
+app.use("/api/v1", cart);
 
 app.use(errorMiddleware);
 

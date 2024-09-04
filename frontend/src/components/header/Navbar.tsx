@@ -1,10 +1,11 @@
-import { FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import Cart from "./Cart";
-import { useState } from "react";
+import { FaSignOutAlt } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+// import Cart from "./Cart";
+// import { useState } from "react";
 import { toast } from "react-toastify";
 import { useLogoutUserMutation } from "../../RTK/UserApi";
 import { FiLogIn } from "react-icons/fi";
+import { MdShoppingCart } from "react-icons/md";
 
 type navProps = {
   user: {
@@ -21,8 +22,9 @@ type navProps = {
 };
 
 const Navbar = ({ user }: navProps) => {
+  const navigate = useNavigate();
   const [logoutUser] = useLogoutUserMutation();
-  const [cartActive, setCartActive] = useState<boolean>(false);
+  // const [cartActive, setCartActive] = useState<boolean>(false);
 
   const handleLogOut = async () => {
     try {
@@ -40,12 +42,14 @@ const Navbar = ({ user }: navProps) => {
   };
 
   const handleCart = () => {
-    setCartActive((prev) => !prev);
+    // setCartActive((prev) => !prev);
+    navigate("/cart");
   };
 
   return (
     <nav className="navbar">
-      <div className="navLeft" onClick={() => setCartActive(false)}>
+      {/* <div className="navLeft" onClick={() => setCartActive(false)}> */}
+      <div className="navLeft">
         <Link to="/" className="logo">
           <span className="V">V</span>
           <span className="X">X</span>
@@ -177,14 +181,14 @@ const Navbar = ({ user }: navProps) => {
           <>
             {/* <Link to={"/cart"}><FaShoppingBag /></Link> */}
             <button onClick={handleCart}>
-              <FaShoppingBag />
+              <MdShoppingCart />
             </button>
             <div className="cartNavContainer">
-              <Cart cartActive={cartActive} setCartActive={setCartActive} />
+              {/* <Cart cartActive={cartActive} setCartActive={setCartActive} /> */}
             </div>
             <div className="container">
               <Link to={"/me"}>
-                <img src={user.avatar.url} alt={user.name}/>
+                <img src={user.avatar.url} alt={user.name} />
               </Link>
               <div className="dropUser">
                 {(user.role === "admin" || user.role === "owner") && (

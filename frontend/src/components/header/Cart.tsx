@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { FaMessage, FaX } from "react-icons/fa6";
 import { MdPayment } from "react-icons/md";
 import CartItem from "../cards/cartItem";
-import data from "../../assets/cartData.json";
 import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import { useGetCartItemsQuery } from "../../RTK/OrderApi";
+import Loader from "../Loader";
 
 type Props = {
   cartActive: boolean;
@@ -12,11 +13,13 @@ type Props = {
 };
 
 const fixedPrice = 2000;
-const cartItems = data.cartItems;
 
 const Cart = ({ cartActive, setCartActive }: Props) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState<boolean>(cartActive);
+  const { data, isLoading } = useGetCartItemsQuery({});
+  const cartItems = data.cartItems;
+  console.log(cartItems);
 
   useEffect(() => {
     setIsActive(cartActive);
@@ -36,6 +39,8 @@ const Cart = ({ cartActive, setCartActive }: Props) => {
     navigate("/shipping");
   };
 
+  if (isLoading) return <Loader />;
+
   return (
     <aside className={`cartContainer ${isActive ? "cartShow" : ""}`}>
       <div className="cartNav">
@@ -54,7 +59,9 @@ const Cart = ({ cartActive, setCartActive }: Props) => {
             </Link>
           </h4>
         ) : (
-          cartItems.map((i, idx) => <CartItem key={idx} cart={i} idx={idx} />)
+          cartItems.map((i: number, idx: number) => (
+            <CartItem key={idx} cart={i} idx={idx} />
+          ))
         )}
       </div>
       <div className="cartDetails">
