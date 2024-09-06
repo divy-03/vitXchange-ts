@@ -4,7 +4,7 @@ import { MdPayment } from "react-icons/md";
 import CartItem from "../cards/cartItem";
 import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetCartItemsQuery } from "../../RTK/OrderApi";
+import { useGetCartItemsQuery } from "../../RTK/CartApi";
 import Loader from "../Loader";
 
 type Props = {

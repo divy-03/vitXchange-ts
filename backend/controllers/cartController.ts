@@ -25,7 +25,7 @@ export const addToCart = catchAsyncError(
     }
 
     await cart.save();
-    resSuccess(201, "Product added to Cart", res);
+    resSuccess(201, "Item Added", res);
   }
 );
 
@@ -33,7 +33,10 @@ export const addToCart = catchAsyncError(
 export const getCartItems = catchAsyncError(
   async (req: Request, res: Response) => {
     const user = req.user?.id;
-    const cart = await Cart.findOne({ user }).populate({path: "cartItems.pid", select: "name price images"})
+    const cart = await Cart.findOne({ user }).populate({
+      path: "cartItems.pid",
+      select: "name price images",
+    });
     res.status(200).json({
       success: true,
       cartItems: cart?.cartItems,
@@ -86,9 +89,9 @@ export const decreaseQuant = catchAsyncError(
         cart.cartItems[productIndex].quantity--;
       }
       await cart.save();
-      resSuccess(200, "Quantity decreased", res);
+      resSuccess(200, "Item Removed", res);
     } else {
-      resError(404, "Product not found in cart", res);
+      resError(404, `Product not found with id: ${pid}`, res);
     }
   }
 );

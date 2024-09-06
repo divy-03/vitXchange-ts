@@ -66,7 +66,7 @@ const Navbar = ({ user }: navProps) => {
       </div>
       <div className="navCenter">
         <div className="container">
-          <Link to={"./category/food"}>Food</Link>
+          <Link to={"./products"}>Products</Link>
           <div className="dropContainer">
             <div className="dropList">
               <ul>

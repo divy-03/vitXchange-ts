@@ -54,7 +54,8 @@ const App = () => {
     },
     __v: 0,
   });
-
+ 
+  // Ideally dont use Mutation inside UseEffect instead use useQuery() or useLazyQuery() and use refetch(); 
   useEffect(() => {
     getUserProfile({})
       .then((result) => {
@@ -84,7 +85,7 @@ const App = () => {
         <Route path="/account" element={<Login />} />
         <Route path="/reset/:token" element={<Reset />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/product/:pid" element={<ProductDetails />} />
         <Route>
           <Route path="/cart" element={<CartX />} />
           <Route path="/shipping" element={<Shipping />} />

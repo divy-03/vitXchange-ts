@@ -29,8 +29,8 @@ export const cartApi = createApi({
 
     decreaseQuant: builder.mutation({
       query: (pid) => ({
-        url: "/cart/decrease",
-        method: "PUT",
+        url: "/cart/decquan",
+        method: "DELETE",
         body: pid,
       }),
     }),
@@ -41,4 +41,6 @@ export const {
   useAddToCartMutation,
   useGetCartItemsQuery,
   useLazyGetCartItemsQuery,
+  useDecreaseQuantMutation,
+  useRemoveFromCartMutation,
 } = cartApi;

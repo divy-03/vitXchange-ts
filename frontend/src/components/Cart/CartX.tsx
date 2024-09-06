@@ -3,8 +3,32 @@ import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { MdPayment } from "react-icons/md";
 import { FaMessage } from "react-icons/fa6";
-import { useGetCartItemsQuery } from "../../RTK/OrderApi";
+import { useGetCartItemsQuery } from "../../RTK/CartApi";
 import Loader from "../Loader";
+
+export type CartItemProps = {
+  cart: {
+    pid: {
+      images: { url: string; public_id: string; _id: string }[];
+      name: string;
+      _id: string;
+      price: number;
+    };
+    quantity: number;
+  };
+  idx: number;
+};
+
+interface CartItem {
+  pid: {
+    _id: string;
+    name: string;
+    images: { url: string, public_id: string; _id: string }[];
+    price: number;
+  };
+  quantity: number;
+  _id: string;
+}
 
 const CartX = () => {
   const navigate = useNavigate();
@@ -25,6 +49,11 @@ const CartX = () => {
     return <Loader />;
   }
 
+  let total = data.cartItems.reduce((acc: number, p: CartItem) => {
+    return acc + p.pid.price * p.quantity;
+  }, 0);
+
+  console.log(total);
   return (
     <div className="cartXContainer">
       <div className="cartItemContainer">
@@ -32,10 +61,10 @@ const CartX = () => {
           <h4>
             Add Product to Cart
             <BsCartPlus />
-            <Link to={"./products"}>Continue Shopping</Link>
+            <Link to={"../products"}>Continue Shopping</Link>
           </h4>
         ) : (
-          data.cartItems.map((i: number, idx: number) => (
+          data.cartItems.map((i: any, idx: number) => (
             <CartItem key={idx} cart={i} idx={idx} />
           ))
         )}
@@ -43,7 +72,7 @@ const CartX = () => {
       <div className="cartDetails">
         <div className="orderDetails">
           <b>Total</b>
-          <b>₹{200}/-</b>
+          <b>{total}/-</b>
         </div>
         <button
           disabled={data.cartItems.length === 0}
