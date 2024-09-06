@@ -39,7 +39,7 @@ export const getCartItems = catchAsyncError(
     });
     res.status(200).json({
       success: true,
-      cartItems: cart?.cartItems,
+      cartItems: (cart) ? cart?.cartItems : [],
     });
   }
 );

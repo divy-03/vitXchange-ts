@@ -81,11 +81,11 @@ const orderSchema = new Schema<IOrder>({
   payInfo: {
     id: {
       type: String,
-      required: true,
+      // required: true,
     },
     status: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
   paidAt: {

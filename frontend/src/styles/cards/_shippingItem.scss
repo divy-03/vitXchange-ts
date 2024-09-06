@@ -1,6 +1,7 @@
 .shipItem {
   @include flex(row, space-between, center, 0);
   width: 100%;
+  border-radius: 10px;
 
   > div {
     @include flex(row, center, center, 0);

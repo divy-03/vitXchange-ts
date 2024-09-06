@@ -11,7 +11,11 @@ declare global {
   }
 }
 
-exports.fetchUser = async (req: Request, res: Response, next: NextFunction) => {
+export const fetchUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const authToken = req.cookies.xToken as string; // Assert as string if confident
 
   if (!authToken) {
@@ -36,10 +40,10 @@ exports.fetchUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-exports.authRole = (...roles: string[]) => {
+export const authRole = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user?.role || !roles.includes(req.user.role)) {
-      return resError(403, "Forbidden", res); // Generic error message
+      return resError(403, "You are not allowed to access this resource", res);
     }
     next();
   };

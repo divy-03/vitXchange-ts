@@ -45,6 +45,9 @@ app.use("/api/v1", product);
 const cart = require("./routes/cartRoute");
 app.use("/api/v1", cart);
 
+const order = require("./routes/orderRoute");
+app.use("/api/v1", order);
+
 app.use(errorMiddleware);
 
 export default app;

@@ -3,17 +3,36 @@ import data from "../assets/cartData.json";
 import { useNavigate } from "react-router-dom";
 import ShippingCard from "../components/cards/ShippingItem";
 import useAuthGuard from "../tools/AuthGuard";
+import { useGetCartItemsQuery } from "../RTK/CartApi";
+import Loader from "../components/Loader";
 const cartItems = data.cartItems;
 
-const subTotal: number = 200200;
-const tax: number = Math.round(subTotal * 0.18);
-const shippingCharges: number = 200;
-const discount: number = 500;
-const total = subTotal + tax + shippingCharges - discount;
+interface CartItem {
+  pid: {
+    _id: string;
+    name: string;
+    images: { url: string; public_id: string; _id: string }[];
+    price: number;
+  };
+  quantity: number;
+  _id: string;
+}
 
 const Shipping = () => {
   useAuthGuard();
   const navigate = useNavigate();
+
+  const { data, isLoading } = useGetCartItemsQuery({});
+
+  if (isLoading) return <Loader />;
+
+  let subTotal = data.cartItems.reduce((acc: number, p: CartItem) => {
+    return acc + p.pid.price * p.quantity;
+  }, 0);
+  const tax: number = Math.round(subTotal * 0.18);
+  const shippingCharges: number = 200;
+  const discount: number = 500;
+  const total = subTotal + tax + shippingCharges - discount;
 
   const [shippingInfo, setShippingInfo] = useState({
     firstName: "",
@@ -39,6 +58,7 @@ const Shipping = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(shippingInfo);
   };
 
   return (
@@ -147,13 +167,13 @@ const Shipping = () => {
             </label>
           </div>
 
-          {/* <button type="submit">Pay Now</button> */}
+          <button type="submit">Pay Now</button>
         </form>
       </div>
       <div className="orderSummary">
         <h2>Order Summary</h2>
-        {cartItems.map((i, idx) => (
-          <ShippingCard key={idx} cart={i} />
+        {data.cartItems.map((i:any, idx:number) => (
+          <ShippingCard key={idx} cart={i} idx={idx}/>
         ))}
         <div>
           <span>Subtotal:</span>

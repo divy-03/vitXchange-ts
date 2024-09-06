@@ -1,29 +1,32 @@
 import { HiArrowUpRight } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { CartItemProps } from "../Cart/CartX";
+import Loader from "../Loader";
 
-type shippingProps = {
-  cart: any;
-};
+const ShippingItem = ({ cart, idx }: CartItemProps) => {
+  if (!cart || !cart.pid) return <Loader />;
 
-const ShippingItem = ({ cart }: shippingProps) => {
-  const { name, id, photo, price, quantity } = cart;
+  const pid = cart.pid._id;
 
   return (
-    <div className="shipItem">
+    <div
+      className="shipItem"
+      style={{ backgroundColor: `${idx % 2 === 0 ? "white" : "#faf6ff"}` }}
+    >
       <div>
         <div>
-          <img src={photo} alt={name} />
-          <p>{quantity}</p>
+          <img src={cart.pid.images[0].url} alt={cart.pid.name} />
+          <p>{cart.quantity}</p>
         </div>
         <div>
-          <Link to={`/product/${id}`}>{name}</Link>
-          <Link to={`/product/${id}`}>
+          <Link to={`/product/${pid}`}>{cart.pid.name}</Link>
+          <Link to={`/product/${pid}`}>
             <HiArrowUpRight />
           </Link>
         </div>
       </div>
       <div>
-        <h4>₹{price}/-</h4>
+        <h4>₹{cart.pid.price}/-</h4>
       </div>
     </div>
   );

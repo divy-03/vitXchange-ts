@@ -23,7 +23,7 @@ interface CartItem {
   pid: {
     _id: string;
     name: string;
-    images: { url: string, public_id: string; _id: string }[];
+    images: { url: string; public_id: string; _id: string }[];
     price: number;
   };
   quantity: number;
@@ -53,7 +53,6 @@ const CartX = () => {
     return acc + p.pid.price * p.quantity;
   }, 0);
 
-  console.log(total);
   return (
     <div className="cartXContainer">
       <div className="cartItemContainer">
