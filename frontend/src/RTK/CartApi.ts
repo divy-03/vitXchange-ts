@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const cartApi = createApi({
   reducerPath: "cartApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:1337/api/v1",
+    baseUrl: "https://vitxchange-server.vercel.app",
     credentials: "include",
   }),
   endpoints: (builder) => ({
