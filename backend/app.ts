@@ -54,4 +54,8 @@ app.get("/", (req: Request, res: Response) => {
   res.json("Server Working");
 });
 
+app.use((req: Request, res: Response) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
 export default app;
