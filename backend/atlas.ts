@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
 
-const uri = "mongodb+srv://divy03:Divy%40Mongo03@cluster0.wai0a.mongodb.net/vitxchangedb?retryWrites=true&w=majority&appName=Cluster0";
-
 export async function connectToAtlas() {
   try {
-    await mongoose.connect(uri);
+    await mongoose.connect(String(process.env.ATLAS_URI));
 
     mongoose.connection.once("open", () => {
       console.log("Successfully connected to MongoDB Atlas!");

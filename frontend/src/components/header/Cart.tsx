@@ -59,7 +59,7 @@ const Cart = ({ cartActive, setCartActive }: Props) => {
             </Link>
           </h4>
         ) : (
-          cartItems.map((i: number, idx: number) => (
+          cartItems.map((i: any, idx: number) => (
             <CartItem key={idx} cart={i} idx={idx} />
           ))
         )}
