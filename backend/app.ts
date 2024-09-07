@@ -50,4 +50,8 @@ app.use("/api/v1", order);
 
 app.use(errorMiddleware);
 
+app.get("/", (req: Request, res: Response) => {
+  res.json("Server Working");
+});
+
 export default app;
