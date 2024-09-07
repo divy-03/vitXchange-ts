@@ -34,17 +34,17 @@ const mapUserDocumentToUser = (userDoc: Document) => {
   };
 };
 
-exports.registerUser = catchAsyncError(
+export const registerUser = catchAsyncError(
   async (req: Request<{}, {}, NewUserRequestBody>, res: Response) => {
     const { name, email, password, avatar } = req.body;
-    const salt = await bcrypt.genSaltSync(10);
-    const secPass = await bcrypt.hashSync(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const secPass = await bcrypt.hash(password, salt);
 
     // Usually this error is handled by 1100 in async errors but hardcoding here, bcoz not working now!
-    const already = await User.findOne({ email: email });
-    if (already) {
-      return resError(403, "User already exist", res);
-    }
+    // const already = await User.findOne({ email: email });
+    // if (already) {
+    //   return resError(403, "User already exist", res);
+    // }
 
     const avt = await v2.uploader.upload(avatar, {
       folder: "avatars",
@@ -68,7 +68,7 @@ exports.registerUser = catchAsyncError(
   }
 );
 
-exports.loginUser = catchAsyncError(
+export const loginUser = catchAsyncError(
   async (req: Request<{}, {}, LoginUserRequestBody>, res: Response) => {
     const { email, password } = req.body;
     await check("email", "Please enter a valid email").isEmail().run(req);
@@ -97,7 +97,7 @@ exports.loginUser = catchAsyncError(
   }
 );
 
-exports.logOutUser = catchAsyncError(
+export const logOutUser = catchAsyncError(
   async (req: Request, res: Response<MessageRespondBody>) => {
     res.cookie("xToken", null, {
       expires: new Date(Date.now()),
@@ -108,14 +108,14 @@ exports.logOutUser = catchAsyncError(
   }
 );
 
-exports.getCookieToken = catchAsyncError(
+export const getCookieToken = catchAsyncError(
   async (req: Request, res: Response) => {
     const token = req.cookies.xToken;
     resSuccess(200, token, res);
   }
 );
 
-exports.getUserProfile = catchAsyncError(
+export const getUserProfile = catchAsyncError(
   async (req: Request, res: Response) => {
     const filter = req.user ? { _id: req.user._id } : {};
     if (!filter) return resError(401, "Unauthorized", res);
@@ -130,7 +130,7 @@ exports.getUserProfile = catchAsyncError(
   }
 );
 
-exports.forgotPassword = catchAsyncError(
+export const forgotPassword = catchAsyncError(
   async (req: Request<{}, {}, { email: string }>, res: Response) => {
     const { email } = req.body;
 
@@ -174,7 +174,7 @@ exports.forgotPassword = catchAsyncError(
   }
 );
 
-exports.resetPassword = catchAsyncError(
+export const resetPassword = catchAsyncError(
   async (
     req: Request<{ token: string }, {}, ResetPasswordRequestBody>,
     res: Response
@@ -210,7 +210,7 @@ exports.resetPassword = catchAsyncError(
   }
 );
 
-exports.updatePassword = catchAsyncError(
+export const updatePassword = catchAsyncError(
   async (
     req: Request<{}, {}, UpdatePasswordRequestBody>,
     res: Response<MessageRespondBody>
@@ -243,7 +243,7 @@ exports.updatePassword = catchAsyncError(
   }
 );
 
-exports.updateProfile = catchAsyncError(
+export const updateProfile = catchAsyncError(
   async (
     req: Request<{}, {}, UpdateProfileRequestBody>,
     res: Response<MessageRespondBody>
@@ -285,7 +285,7 @@ exports.updateProfile = catchAsyncError(
   }
 );
 
-exports.getAllUsers = catchAsyncError(async (req: Request, res: Response) => {
+export const getAllUsers = catchAsyncError(async (req: Request, res: Response) => {
   const users = await User.find({});
 
   return res.status(200).json({
@@ -295,7 +295,7 @@ exports.getAllUsers = catchAsyncError(async (req: Request, res: Response) => {
   });
 });
 
-exports.getUser = catchAsyncError(
+export const getUser = catchAsyncError(
   async (req: Request<{ id: string }>, res: Response) => {
     const user = await User.findById(req.params.id);
 
@@ -309,7 +309,7 @@ exports.getUser = catchAsyncError(
   }
 );
 
-exports.editUserRole = catchAsyncError(
+export const editUserRole = catchAsyncError(
   async (
     req: Request<{ id: string }, {}, NewUserRequestBody>,
     res: Response
@@ -337,7 +337,7 @@ exports.editUserRole = catchAsyncError(
   }
 );
 
-exports.deleteUser = catchAsyncError(
+export const deleteUser = catchAsyncError(
   async (req: Request<{ id: string }>, res: Response<MessageRespondBody>) => {
     const user = await User.findById(req.params.id);
 

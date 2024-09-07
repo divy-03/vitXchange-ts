@@ -5,6 +5,8 @@ import ShippingCard from "../components/cards/ShippingItem";
 import useAuthGuard from "../tools/AuthGuard";
 import { useGetCartItemsQuery } from "../RTK/CartApi";
 import Loader from "../components/Loader";
+import { useCreateOrderMutation } from "../RTK/OrderApi";
+import { toast } from "react-toastify";
 const cartItems = data.cartItems;
 
 interface CartItem {
@@ -18,6 +20,17 @@ interface CartItem {
   _id: string;
 }
 
+interface shipInfoType {
+  firstName: string;
+  lastName: string;
+  phone: number | undefined;
+  campus: string;
+  hostel: string;
+  block: string;
+  wing: string;
+  room: string;
+}
+
 const Shipping = () => {
   useAuthGuard();
   const navigate = useNavigate();
@@ -26,25 +39,25 @@ const Shipping = () => {
 
   if (isLoading) return <Loader />;
 
-  let subTotal = data.cartItems.reduce((acc: number, p: CartItem) => {
+  let itemsPrice = data.cartItems.reduce((acc: number, p: CartItem) => {
     return acc + p.pid.price * p.quantity;
   }, 0);
-  const tax: number = Math.round(subTotal * 0.18);
-  const shippingCharges: number = 200;
+  const tax: number = Math.round(itemsPrice * 0.18);
+  const shippingPrice: number = 200;
   const discount: number = 500;
-  const total = subTotal + tax + shippingCharges - discount;
+  const totalPrice = itemsPrice + tax + shippingPrice - discount;
 
-  const [shippingInfo, setShippingInfo] = useState({
+  const [shippingInfo, setShippingInfo] = useState<shipInfoType>({
     firstName: "",
     lastName: "",
-    phoneNo: "",
+    phone: undefined,
     campus: "",
     hostel: "",
     block: "",
     wing: "",
-    roomNo: "",
-    paymentMethod: "",
+    room: "",
   });
+  const [payMethod, setPayMethod] = useState<string>("");
 
   const changeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -56,10 +69,26 @@ const Shipping = () => {
     if (cartItems.length <= 0) return navigate("/");
   }, [cartItems, navigate]);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const [createOrder, { isLoading: createLoad }] = useCreateOrderMutation();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(shippingInfo);
+    const body = {
+      shippingInfo,
+      payMethod,
+      shippingPrice,
+      totalPrice,
+      itemsPrice,
+    };
+    const result = await createOrder(body);
+    if (!result.data.success) {
+      return toast.error(result.data.error);
+    }
+    toast.success("Order Created");
+    navigate(`/order/${result.data.order._id}`);
   };
+
+  if (createLoad) return <Loader />;
 
   return (
     <div className="shippingContainer">
@@ -88,10 +117,15 @@ const Shipping = () => {
           <input
             type="number"
             required
-            name="phoneNo"
+            name="phone"
             placeholder="Phone Number"
-            value={shippingInfo.phoneNo}
-            onChange={changeHandler}
+            value={shippingInfo.phone}
+            onChange={(e) =>
+              setShippingInfo((prev) => ({
+                ...prev,
+                phone: parseInt(e.target.value, 10),
+              }))
+            }
           />
           <select
             name="campus"
@@ -136,8 +170,8 @@ const Shipping = () => {
             type="text"
             onChange={changeHandler}
             required
-            name="roomNo"
-            value={shippingInfo.roomNo}
+            name="room"
+            value={shippingInfo.room}
             placeholder="Room No."
           />
 
@@ -150,8 +184,8 @@ const Shipping = () => {
                 type="radio"
                 name="paymentMethod"
                 value="cashOnDelivery"
-                checked={shippingInfo.paymentMethod === "cashOnDelivery"}
-                onChange={changeHandler}
+                checked={payMethod === "cashOnDelivery"}
+                onChange={() => setPayMethod("cashOnDelivery")}
               />
               Cash on Delivery
             </label>
@@ -160,8 +194,8 @@ const Shipping = () => {
                 type="radio"
                 name="paymentMethod"
                 value="onlinePayment"
-                checked={shippingInfo.paymentMethod === "onlinePayment"}
-                onChange={changeHandler}
+                checked={payMethod === "onlinePayment"}
+                onChange={() => setPayMethod("onlinePayment")}
               />
               Online Payment
             </label>
@@ -172,16 +206,16 @@ const Shipping = () => {
       </div>
       <div className="orderSummary">
         <h2>Order Summary</h2>
-        {data.cartItems.map((i:any, idx:number) => (
-          <ShippingCard key={idx} cart={i} idx={idx}/>
+        {data.cartItems.map((i: any, idx: number) => (
+          <ShippingCard key={idx} cart={i} idx={idx} />
         ))}
         <div>
           <span>Subtotal:</span>
-          <span>₹{subTotal}</span>
+          <span>₹{totalPrice}</span>
         </div>
         <div>
           <span>ShippinCharges:</span>
-          <span>₹{shippingCharges}</span>
+          <span>₹{shippingPrice}</span>
         </div>
         <div>
           <span>Tax:</span>
@@ -193,7 +227,7 @@ const Shipping = () => {
         </div>
         <div>
           <b>Total:</b>
-          <b>₹{total}</b>
+          <b>₹{totalPrice}</b>
         </div>
       </div>
     </div>
