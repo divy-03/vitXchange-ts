@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://vitxchange-server.vercel.app",
+    // baseUrl: process.env.REACT_APP_BASE_URL,
+    baseUrl: "https://vitxchange-server.onrender.com/api/v1/",
     credentials: "include", // Importand to include "cookies"
   }),
   endpoints: (builder) => ({

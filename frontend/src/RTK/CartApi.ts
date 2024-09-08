@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const cartApi = createApi({
   reducerPath: "cartApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://vitxchange-server.vercel.app",
+    // baseUrl: process.env.REACT_APP_BASE_URL, // Correct usage in the frontend
+    baseUrl: "https://vitxchange-server.onrender.com/api/v1/",
     credentials: "include",
   }),
   endpoints: (builder) => ({
@@ -14,7 +15,6 @@ export const cartApi = createApi({
         body: pid,
       }),
     }),
-
     removeFromCart: builder.mutation({
       query: (pid) => ({
         url: "/cart/remove",
@@ -22,11 +22,9 @@ export const cartApi = createApi({
         body: pid,
       }),
     }),
-
     getCartItems: builder.query({
       query: () => "/cart/items",
     }),
-
     decreaseQuant: builder.mutation({
       query: (pid) => ({
         url: "/cart/decquan",
